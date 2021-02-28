@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[1],{195:function(n,o,e){"use strict";e.r(o),o.default={"Coming Soon":"Coming Soon",Subscribe:"Subscribe",holdingPage:{title:"Spanish title translation",body:"<p>Spanish body translation.</p>",subscribeLabel:"Subscribe in spanish."}}}}]);

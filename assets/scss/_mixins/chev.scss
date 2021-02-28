@@ -1,0 +1,24 @@
+@mixin chev($direction, $size, $color) {
+	height:$size; width:$size;
+	margin:0;
+	margin-top:-(($size / 2));
+	border:solid $color;
+	border-width:0 2px 2px 0;
+	display:inline-block;
+	background-repeat:no-repeat;
+	background-size:contain;
+	background-position:center;
+	vertical-align: middle;
+	@if $direction == 'down' {
+		transform:rotate(45deg);
+	}
+	@if $direction == 'left' {
+		transform:rotate(135deg);
+	}
+	@if $direction == 'top' {
+		transform:rotate(225deg);
+	}
+	@if $direction == 'right' {
+		transform:rotate(315deg);
+	}
+}

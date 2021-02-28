@@ -1,0 +1,51 @@
+.learn-more-link {
+	display:inline-block;
+	padding:0 ($multiple * 1) 0 ($multiple / 4);
+	position:relative;
+	color:$green;
+	font-weight:bolder;
+	cursor:pointer;
+	&::before {
+		position:absolute;
+		top:3px; left:0; right:0; bottom:-1px;
+		display:block;
+		border-radius:$multiple / 2;
+		border:$border;
+		background:transparent;
+		content:"";
+	}
+	&::after {
+		position:absolute;
+		right:3px;
+		top:6px;
+		content:"i";
+		font-family:$title-font-family;
+		font-weight:700;
+		line-height:14px;
+		text-align:center;
+		font-size:12px;
+		width:16px; height:16px;
+		//background-image:url("~assets/images/information-icon.png");
+		background-size:contain;
+		display:block;
+		border-radius:50%;
+		background-color:$light-purple;
+		border:1px solid $purple;
+		box-sizing:border-box;
+		color:$white;
+		transition:0.3s $ease-in-out-expo;
+
+	}
+	&:hover {
+		&::after {
+			background-color:$purple;
+		}
+	}
+	&:active {
+		&::after {
+			transform:scale(0.95);
+			transition:0.1s $elastic;
+			background-color:$purple;
+		}
+	}
+}

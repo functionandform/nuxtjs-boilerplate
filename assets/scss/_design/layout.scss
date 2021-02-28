@@ -1,0 +1,21 @@
+html, body {
+	height: 100%;
+	background-color:$light-grey;
+}
+
+body {
+	display:flex;
+	flex-direction:column;
+	&.no-scroll {
+		overflow:hidden;
+	}
+	&.no-scroll-fix {
+		overflow:hidden;
+		@include breakpoint-less-than(lg) {
+			position:fixed;
+		}
+	}
+	&.overlayOpen {
+		overflow:hidden;
+	}
+}

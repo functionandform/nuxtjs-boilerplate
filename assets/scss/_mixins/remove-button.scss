@@ -1,0 +1,38 @@
+@mixin remove-button($size) {
+	position:relative;
+	display:inline-block;
+	&::before, &::after {
+		height:2px;
+		position:absolute;
+		top:calc(50% - 1px);
+		display:block;
+		background-color:$black;
+		content:"";
+		transform:rotate(45deg);
+	}
+	&::after {
+		transform:rotate(-45deg);
+	}
+  	@if $size == 'small' {
+	  	height:$multiple * 1.5;
+		width:$multiple * 1.5;
+		&::before, &::after {
+			width:$multiple * 0.75;
+			left:($multiple * 0.75) - ($multiple * 0.325);
+		}
+	} @else if $size == 'tiny' {
+	  	height:$multiple * 1.5;
+		width:$multiple * 1.5;
+		&::before, &::after {
+			width:$multiple * 0.5;
+			left:$multiple / 2;
+		}
+  } @else {
+	  	height:$multiple * 2;
+		width:$multiple * 2;
+	    &::before, &::after {
+			width:$multiple * 1;
+			left:$multiple / 2;
+		}
+	}
+}

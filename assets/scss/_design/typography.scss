@@ -1,0 +1,178 @@
+body {
+	font-size:15px;
+	font-weight:300;
+	line-height:$multiple;
+	font-family:$body-font-family;
+	color:$black;
+	@include breakpoint(md) {
+		font-size:17px;
+	}
+}
+
+*, body {
+	-webkit-font-smoothing: antialiased; /* This needs to be set or some font faced fonts look bold on Mac in Chrome/Webkit based browsers. */
+	-moz-osx-font-smoothing: grayscale; /* Fixes font bold issue in Firefox version 25+ on Mac */
+	font-display:swap;
+}
+
+p {
+	line-height:$multiple;
+	margin-bottom:$multiple;
+	strong {
+		font-weight:bolder;
+	}
+	&.small {
+		
+		@include breakpoint(lg) {
+			
+		}
+	}
+	&.big {
+		
+		@include breakpoint(lg) {
+			
+		}
+	}
+	a:link {
+		text-decoration:underline;
+	}
+	&.alert {
+	}
+	.dropcap {
+		
+	}
+	&.caveat {
+		font-size:10px;
+		line-height:$multiple * 0.75;
+	}
+}
+
+p, ul, ol {
+	a:link, a:visited {
+		color:$purple;
+		text-decoration:none;
+		font-weight:bolder;
+		&:hover {
+			
+		}
+	}
+}
+
+
+
+// p {
+// 	a[target="_blank"]::after {
+// 		display:inline-block;
+// 		height:$multiple;
+// 		width:$multiple;
+// 		content:"";
+// 		vertical-align:middle;
+// 		background-image:url('/assets/images/other/ext-link.png');
+// 		background-size:16px;
+// 		background-repeat:no-repeat;
+// 		background-position:center;
+// 		position:relative;
+// 		margin-left:2px;
+// 		top:-1px;
+// 		// @include breakpoint(tablet-l) {
+// 		// 	height:$lg-multiple;
+// 		// 	width:$lg-multiple;
+// 		// }
+// 	}
+// 	&.small a[href*='//']::after {
+// 		background-size:12px;
+// 	}
+// }
+
+sup {
+	vertical-align:super;
+	font-size:0.5em;
+	position:relative;
+}
+
+sub {
+	vertical-align:sub;
+	font-size:0.5em;
+	position:relative;
+}
+
+strong {
+	font-weight:bolder;
+}
+
+ul, ol {
+	
+	li {
+
+	}
+}
+
+h1,h2,h3,h4,h5,h6, .h1,.h2,.h3,.h4,.h5,.h6 {
+	font-family:$title-font-family;
+	font-weight:500;
+	margin-bottom:$multiple;
+	
+}
+
+h5, .h5 {
+	font-variant-ligatures: discretionary-ligatures;
+	color:$black;
+	
+	
+	
+}
+
+h4, .h4 {
+	font-variant-ligatures: discretionary-ligatures;
+	color:$black;
+	
+}
+
+h3, .h3 {
+	font-variant-ligatures: discretionary-ligatures;
+	font-weight:500;
+	line-height:$multiple * 1.25;
+	font-size:21px;
+	color:$black;
+}
+
+h2, .h2 {
+	font-variant-ligatures: discretionary-ligatures;
+	font-weight:300;
+	line-height:$multiple * 1.5;
+	font-size:29px;
+	color:$green;
+
+}
+
+h1, .h1 {
+	font-variant-ligatures: discretionary-ligatures;
+	font-weight:600;
+	color:$green;
+	font-size:38px;
+	line-height:$multiple * 2;
+	color:$green;
+	@include breakpoint(md) {
+		
+	}
+	@include breakpoint(lg) {
+		
+	}
+	@include breakpoint(xl) {
+		
+	}
+	& + h2, & + .h2 {
+		margin-top:-$multiple;
+	}
+}
+
+
+
+
+.lower {
+	text-transform:none;
+}
+
+.upper {
+	text-transform:uppercase;
+}

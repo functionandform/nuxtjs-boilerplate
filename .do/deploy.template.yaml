@@ -1,0 +1,31 @@
+name: madefair
+region: ams
+services:
+- build_command: |-
+    npm install
+    npm run build
+  environment_slug: node-js
+  envs:
+  - key: APOLLO_DEFAULT_ENDPOINT
+    scope: RUN_AND_BUILD_TIME
+    value: https://api.madefair.org/graphql
+  - key: ENV
+    scope: RUN_AND_BUILD_TIME
+    value: production
+  - key: NODE_ENV
+    scope: RUN_AND_BUILD_TIME
+    value: production
+  - key: API_BASE_URL
+    scope: RUN_AND_BUILD_TIME
+    value: https://api.madefair.org/
+  github:
+    branch: stage
+    deploy_on_push: true
+    repo: functionandform/madefair
+  http_port: 8080
+  instance_count: 1
+  instance_size_slug: basic-xs
+  name: madefair
+  routes:
+  - path: /
+  run_command: npm start

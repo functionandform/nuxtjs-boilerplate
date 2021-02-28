@@ -1,0 +1,11 @@
+button:hover, button:active, a:hover, a:focus {
+	outline:none;
+}
+button:not(:hover):not(:active):focus, a:not(:hover):not(:active):focus {
+	
+}
+
+
+::selection {
+  
+}

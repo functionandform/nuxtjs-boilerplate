@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+/**
+ * Style file
+ *
+ * This file is compiled into global.css
+ */
+
+@import '~/assets/scss/_variables/max-widths';
+@import '~/assets/scss/_variables/multiples';
+@import '~/assets/scss/_variables/breakpoints';
+@import '~/assets/scss/_variables/colors';
+@import '~/assets/scss/_variables/fonts';
+@import '~/assets/scss/_variables/shadows';
+@import '~/assets/scss/_variables/easings';
+
+
+@import '~/assets/scss/_mixins/aspect-ratios';
+@import '~/assets/scss/_mixins/breakpoints';
+@import '~/assets/scss/_mixins/clearfix';
+@import '~/assets/scss/_mixins/scale-interaction';
+@import '~/assets/scss/_mixins/typography';
+@import '~/assets/scss/_mixins/linear-gradients';
+@import '~/assets/scss/_mixins/remove-button';
+@import '~/assets/scss/_mixins/arrow';
+@import '~/assets/scss/_mixins/chev';
+
+
+
+/* ---------- Import css reset ---------- */
+
+@import '~/assets/scss/_base/reset';
+
+/* ---------- Import fonts ---------- */
+
+@import '~/assets/scss/_base/fonts';
+
+
+/* ---------- Import themes ---------- */
+
+@import '~/assets/scss/_base/themes';
+
+
+/* ---------- Import design ---------- */
+@import '~/assets/scss/_design/globals';
+@import '~/assets/scss/_design/layout';
+@import '~/assets/scss/_design/typography';
+@import '~/assets/scss/_design/learn-more-link';
+@import '~/assets/scss/_design/common';
+
+
+/*--------- import overrides ---------- */
+
+@import '~/assets/scss/overrides';
+

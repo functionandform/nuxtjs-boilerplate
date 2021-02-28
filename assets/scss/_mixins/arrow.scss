@@ -1,0 +1,96 @@
+
+@mixin arrow($position, $color, $size: 6px) {
+	border: solid transparent;
+	content: "";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-width:$size;
+	left:auto; right:auto; bottom:auto; top:auto;
+	margin-left:auto; margin-right:auto; margin-left:auto; margin-bottom:auto;
+	border-left-color:transparent;
+	border-top-color:transparent;
+	border-right-color:transparent;
+	border-bottom-color:transparent;
+	@if $position == 'top' {
+		border-bottom-color:$color;
+		margin-left: -$size;
+		bottom: 100%;
+		left: 50%;
+	}
+	@if $position == 'left' {
+		border-right-color:$color;
+		margin-top: -$size;
+		right: 100%;
+		top: 50%;
+	}
+	@if $position == 'bottom' {
+		border-top-color:$color;
+		margin-left: -$size;
+		top: 100%;
+		left: 50%;
+	}
+	@if $position == 'right' {
+		border-left-color:$color;
+		margin-right: -$size;
+		left: 100%;
+		top: 50%;
+	}
+}
+
+$sr2:1.41421356237;
+
+@mixin box-arrow($position, $bgColor:$white, $borderColor:$purple, $borderWidth:1px, $borderStyle:dashed, $size: 6px) {
+	&::before, &::after {
+		border: solid transparent;
+		content: "";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+		left:auto; right:auto; bottom:auto; top:auto;
+		margin-left:auto; margin-right:auto; margin-left:auto; margin-bottom:auto;
+		border-left-color:transparent;
+		border-top-color:transparent;
+		border-right-color:transparent;
+		border-bottom-color:transparent;
+	}
+	&::before {
+		border-width:($size * $sr2);
+	}
+	&::after {
+		width:$size * $sr2; height:$size * $sr2;
+		border-style: $borderStyle;
+		border-width: $borderWidth;
+		border-color: transparent;
+		transform:rotate(45deg);
+	}
+	@if $position == 'top' {
+		&::before {
+			border-bottom-color:$bgColor;
+			margin-left: -((($size * $sr2) / 2) + $borderWidth);
+			bottom: 100%;
+			left: 50%;
+		}
+		&::after {
+			margin-left:-(($size - ($borderWidth)) / 2);
+			left:50%;
+			bottom:calc(100% - #{((($size * $sr2) - $size) + $borderWidth)});
+			border-left-color: $borderColor;
+			border-top-color: $borderColor;
+		}
+	}
+	@if $position == 'left' {
+		
+		
+	}
+	@if $position == 'bottom' {
+		
+		
+	}
+	@if $position == 'right' {
+		
+		
+	}
+}
