@@ -19,15 +19,15 @@
 
 // margin bottom
 .add-margin {
-	margin-bottom:$multiple;
+	margin-bottom:vr(1);
 }
 
 .half-margin {
-	margin-bottom:$multiple / 2;
+	margin-bottom:vr(0.5);
 }
 
 .add-large-margin {
-	margin-bottom:$multiple * 3;
+	margin-bottom:vr(3);
 }
 
 .no-margin {
@@ -43,13 +43,22 @@
 
 // overflow
 
-.no-overflow {
+.no-overflow, .no-scroll {
+	overflow:hidden;
+}
+
+.modal-open {
 	overflow:hidden;
 }
 
 // textwrap
 .nowrap {
 	white-space:nowrap;
+}
+
+.text-overflow {
+	text-overflow:ellipsis;
+	overflow:hidden;
 }
 
 // text overflow
@@ -85,15 +94,15 @@
 
 	// margin bottom
 	.add-margin-xs {
-		margin-bottom:$multiple;
+		margin-bottom:vr(1);
 	}
 
 	.half-margin-xs {
-		margin-bottom:$multiple / 2;
+		margin-bottom:vr(0.5);
 	}
 
 	.add-large-margin-xs {
-		margin-bottom:$multiple * 3;
+		margin-bottom:vr(3);
 	}
 
 	.no-margin-xs {
@@ -153,15 +162,15 @@
 
 	// margin bottom
 	.add-margin-sm {
-		margin-bottom:$multiple;
+		margin-bottom:vr(1);
 	}
 
 	.half-margin-sm {
-		margin-bottom:$multiple / 2;
+		margin-bottom:vr(0.5);
 	}
 
 	.add-large-margin-sm {
-		margin-bottom:$multiple * 3;
+		margin-bottom:vr(3);
 	}
 
 	.no-margin-sm {
@@ -221,15 +230,15 @@
 
 	// margin bottom
 	.add-margin-md {
-		margin-bottom:$multiple;
+		margin-bottom:vr(1);
 	}
 
 	.half-margin-md {
-		margin-bottom:$multiple / 2;
+		margin-bottom:vr(0.5);
 	}
 
 	.add-large-margin-md {
-		margin-bottom:$multiple * 3;
+		margin-bottom:vr(3);
 	}
 
 	.no-margin-md {
@@ -289,15 +298,15 @@
 
 	// margin bottom
 	.add-margin-lg {
-		margin-bottom:$multiple;
+		margin-bottom:vr(1);
 	}
 
 	.half-margin-lg {
-		margin-bottom:$multiple / 2;
+		margin-bottom:vr(0.5);
 	}
 
 	.add-large-margin-lg {
-		margin-bottom:$multiple * 3;
+		margin-bottom:vr(3);
 	}
 
 	.no-margin-lg {
@@ -358,15 +367,15 @@
 
 	// margin bottom
 	.add-margin-xl {
-		margin-bottom:$multiple;
+		margin-bottom:vr(1);
 	}
 
 	.half-margin-xl {
-		margin-bottom:$multiple / 2;
+		margin-bottom:vr(0.5);
 	}
 
 	.add-large-margin-xl {
-		margin-bottom:$multiple * 3;
+		margin-bottom:vr(3);
 	}
 
 	.no-margin-xl {
@@ -425,15 +434,15 @@
 
 	// margin bottom
 	.add-margin-xxl {
-		margin-bottom:$multiple;
+		margin-bottom:vr(1);
 	}
 
 	.half-margin-xxl {
-		margin-bottom:$multiple / 2;
+		margin-bottom:vr(0.5);
 	}
 
 	.add-large-margin-xxl {
-		margin-bottom:$multiple * 3;
+		margin-bottom:vr(3);
 	}
 
 	.no-margin-xxl {

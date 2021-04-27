@@ -35,8 +35,6 @@ export default {
         { rel:'icon', type:'image/png', href:'/favicon/favicon-16x16.png', sizes:'16x16'},
         { rel:'icon', type:'image/png', href:'/favicon/favicon-128.png', sizes:'128x128'},
         
-      // Adobe fonts
-      { rel:"stylesheet", href:"https://use.typekit.net/coc7iap.css" }
     ]
   },
   // Public config variables
@@ -56,9 +54,13 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-     '~/plugins/flexboxgrid/index',
-     '~/plugins/vue-lazyload.client',
-     '~/plugins/flickity.client.js'
+    '~/plugins/flexboxgrid/index',
+    '~/plugins/vue-lazyload.client',
+    '~/plugins/flickity.client.js',
+    '~/plugins/headroom.client.js',
+    '~/plugins/vue-check-view.client.js',
+    '~/plugins/global-mixins.js',
+    '~/plugins/filters/*'
   ],
 
   // dev mode
@@ -89,46 +91,14 @@ export default {
 
 
 // Customize the progress-bar color
-  loading: { color: '#FBE4D3', height: '4px' },
+  loading: false,
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
   '@nuxtjs/apollo',
   '@nuxtjs/style-resources',
-  //'nuxt-i18n',
-  // 'nuxt-seomatic-meta',
   // '@nuxtjs/axios', // needed for nuxt seomatic meta
   ],
-
-  // Internationalization for multi-languages
-
-  i18n: {
-    locales: [
-      {code:'en', iso:'en-GB', file:'en-GB.js', name:'English'}
-    ],
-    defaultLocale: 'en',
-    strategy: 'prefix_except_default',
-    seo: false,
-    lazy:true,
-    langDir: 'lang/',
-    detectBrowserLanguage: { 
-      alwaysRedirect: false, 
-      fallbackLocale: '', 
-      onlyOnRoot: true, 
-      useCookie: true, 
-      cookieCrossOrigin: false, 
-      cookieDomain: null, 
-      cookieKey: 'i18n_redirected', 
-    cookieSecure: false },
-    vueI18n: {
-      fallbackLocale: 'en',
-      messages: {
-        en: {
-          welcome: 'Welcome'
-        },
-      }
-    }
-  },
 
   // Apollo config and endpoint for graph ql
   apollo: {
@@ -150,17 +120,11 @@ export default {
       '~/assets/scss/_variables/fonts.scss',
       '~/assets/scss/_variables/shadows.scss',
       '~/assets/scss/_mixins/*.scss',
+      '~/assets/scss/_functions/*.scss',
 
     ]
   },
 
-  // SEOMATIC config
-  // seomaticMeta: {
-  //   debug: process.env.NODE_ENV !== 'production',
-  //   backendUrl: process.env.API_BASE_URL,
-  //   graphqlPath: process.env.GRAPHQL_PATH,
-  //   graphqlToken: process.env.GRAPHQL_TOKEN,
-  // },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
@@ -175,6 +139,20 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+    // some chunking optimisations
+    extractCSS: true,
+        optimization: {
+            splitChunks: {
+                cacheGroups: {
+                    styles: {
+                        name: 'styles',
+                        test: /\.(css|vue)$/,
+                        chunks: 'all',
+                        enforce: true
+                    }
+                }
+            }
+        },
     // extend webpack here
     extend (config, ctx) {
       config.node = {

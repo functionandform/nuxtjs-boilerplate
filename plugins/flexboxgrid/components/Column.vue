@@ -75,10 +75,10 @@ export default {
 
 div[class^='col-'], div[class*=' col-'] { 
   width:100%;
-  padding-right: $multiple / 2;
-  padding-left: $multiple / 2;
-  margin-right:0;
-  margin-left:0;
+  padding-right: vr(0.5);
+  padding-left: vr(0.5);
+  //margin-right:0;
+  //margin-left:0;
 }
 
 
@@ -505,8 +505,8 @@ div[class^='col-xxs-'], div[class*=' col-xxs-'] {
   .col__sticky-content {
     z-index:1;
     position:sticky;
-    top:$multiple * 3;
-    margin-bottom:$multiple;
+    top:vr(3);
+    margin-bottom:vr(1);
   }
 
   .col-md,

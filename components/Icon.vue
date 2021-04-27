@@ -1,7 +1,5 @@
 <template>
-	<svg :class="'icon '+addClass"><use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="'/assets/iconography/icons.svg'+'#icon-'+ name"></use></svg>
-
-
+	<svg :class="'icon '+addClass+' icon--'+size"><use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="require('~/assets/icons/icons.svg')+'#icon-'+ name"></use></svg>
 </template>
 
 
@@ -16,6 +14,11 @@
 				required:false,
 				type:String,
 				default:''
+			},
+			size: {
+				required:false,
+				type:String,
+				default:'regular'
 			}
 		},
 		methods: {
@@ -39,11 +42,15 @@
 	  display: inline-block;
 	  /* icon primary color */
 	  color: $black;
-	  height:$multiple; width:$multiple;
+	  height:24px; width:24px;
 	  stroke-width:2px;
 	  vertical-align: middle;
 	  &--large {
-	    width:$multiple * 2; height:$multiple * 2;
+	    width:36px; height:36px;
+	  }
+	  &--small {
+	    width:16px; height:16px;
+
 	  }
 	}
 

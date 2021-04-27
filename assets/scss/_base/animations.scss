@@ -1,0 +1,19 @@
+.pop-transition-enter-active, .pop-transition-leave-active {
+    transition:all 0.5s $ease-out-expo 0s;
+}
+
+.pop-transition-enter,
+.pop-transition-leave-to {
+    opacity: 0;
+    transform:scale(0.9);
+}
+
+
+.fade-transition-enter-active, .fade-transition-leave-active {
+    transition:all 0.5s $ease-out-expo 0s;
+}
+
+.fade-transition-enter,
+.fade-transition-leave-to {
+    opacity: 0;
+}

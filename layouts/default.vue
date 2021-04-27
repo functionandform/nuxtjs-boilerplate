@@ -1,31 +1,16 @@
 <template>
   <div class="app">
-  	<header-nav></header-nav>
   	<main class="main">
   		<transition name="fade" appear>
 		    <Nuxt />
 		</transition>
-	    <step-nav v-if="showNav"></step-nav>
-	    <overlay-entry></overlay-entry>
 	</main>
   </div>
 </template>
 
 <script>
 	export default {
-		head() {
-			return this.$nuxtI18nSeo()
-		},
-		computed: {
-			showNav() {
-				if (this.$route.params.styleCode) {
-					return true
-				}
-				else {
-					return false
-				}
-			}
-		}
+		
 	}
 </script>
 

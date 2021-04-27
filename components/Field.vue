@@ -2,38 +2,28 @@
     <div class="field"
          :class="[typeClass(), {'field--invert': invert, 'field--minimal': minimal , 'field--inline': inline, 'field--required':required}, classes]">
         <template v-if="type != 'radio' && type != 'checkbox'">
-
-            <template v-if="label">
-                <div class="row between-xs middle-xs">
-                    <div class="col-xs align-left">
-                        <label :for="id" class="field__label">{{ label }}</label>
-                    </div><!-- col -->
-                    <div class="col-xs align-right" v-if="adjacentLabelContent" :html="adjacentLabelContent"></div>
-                    <!-- col -->
-                </div><!-- row -->
-            </template>
-
             <div class="field__wrapper">
                 <div class="field__hint-icon" v-if="icon">
-                    <svg class="icon icon--grid-24 icon--outline">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                             :xlink:href=" '/assets/icons/icons.svg#icon-' + icon"/>
-                    </svg>
+                    <icon :name="icon"></icon>
                 </div><!-- icon -->
 
                 <template v-if="type === 'select'">
                     <select :type="type" :name="name" :placeholder="placeholder" :disabled="disabled"
                             :readonly="readonly"  :required="required" @focus="focus" @blur="validateAndBlur" @change="active" ref="input"
                             class="field__select" :value="value" @input="$emit('input', $event.target.value)">
-                        <option v-for="(option, index) in options" :value="option.value" :selected="option.selected" :key="index">{{
+                        <option disabled>Please select</option>
+                        <option v-for="(option, index) in options" :value="option.value" :selected="option.checked" :key="index">{{
                             option.label ? option.label : option.value}}
                         </option>
                     </select>
+                    <div class="field__select-icon">
+                        <icon name="chev-down-small" size="small"></icon>
+                    </div>
                 </template>
 
                 <template v-else-if="type === 'textarea'">
                     <textarea :type="type" :name="name" :placeholder="placeholder" :disabled="disabled"
-                              :readonly="readonly" @focus="focus" @blur="validateAndBlur" @keyup="active(); textarea()"
+                              :readonly="readonly" @focus="focus" @blur="validateAndBlur" @change="onChange" @keyup="active, textarea"
                               ref="input" class="field__textarea" :value="value"
                               @input="$emit('input', $event.target.value)" :required="required"></textarea>
                 </template>
@@ -46,14 +36,13 @@
                 </template>
                 <template v-if="submitButton">
                     <div class="field__submit">
-                        <v-button type="submit" weight="primary" :loading="loading">
-                            <template v-if="submitButtonLabel">
-                                {{submitButtonLabel}}
-                            </template>
-                        </v-button>
+                        <icon name="arrow-right"></icon>
                     </div><!-- submit -->
                 </template>
             </div><!-- wrapper -->
+            <template v-if="label">
+                <label :for="id" class="field__label h5">{{ label }}</label>
+            </template>
         </template>
 
         <template v-if="type === 'checkbox' || type === 'radio'">
@@ -209,21 +198,22 @@
 
         },
         methods: {
-            onChange: function(e) {
+            onChange(e) {
                 this.$emit('input', this.value)
                 this.active()
             },
-            focus: function () {
+            focus() {
                 this.$el.closest(".field").classList.add("field--focus");
             },
-            typeClass: function () {
+            typeClass() {
                 return 'field--' + this.type;
             },
-            active: function () {
-                if (this.$refs.input.value.length > 0) {
-                    this.$refs.input.closest(".field").classList.add("field--active");
+            active() {
+                const input = this.$refs.input;
+                if (input.value.length > 0) {
+                    input.closest(".field").classList.add("field--active");
                 } else {
-                    this.$refs.input.closest(".field").classList.add("field--active");
+                    input.closest(".field").classList.remove("field--active");
                 }
             },
             validateAndBlur() {
@@ -234,13 +224,14 @@
                 this.$refs.input.closest(".field").classList.remove("field--focus");
             },
             validate: function () {
-                if (!this.$refs.input.validity.valid) {
-                    this.$refs.input.closest(".field").classList.add("field--invalid");
+                const input = this.$refs.input;
+                if (!input.validity.valid) {
+                    input.closest(".field").classList.add("field--invalid");
                 } else {
-                    this.$refs.input.closest(".field").classList.remove("field--invalid");
+                    input.closest(".field").classList.remove("field--invalid");
                 }
             },
-            textarea: function () {
+            textarea: function() {
                 this.$refs.input.style.height = "48px";
                 this.$refs.input.style.height = (this.$refs.input.scrollHeight) + "px";
             },
@@ -293,16 +284,21 @@
 
     .field {
         display:block;
-        margin-bottom:$multiple;
-        //padding-bottom:$multiple / 2;
+        margin-bottom:vr(1);
+        padding-bottom:vr(0.5);
         box-sizing: border-box;
         position:relative;
         &__label {
             display:block;
-            margin-bottom:$multiple / 2;
-            line-height:$multiple;
-            color:$black;
-            font-weight:500;
+            margin-bottom:vr(0.5);
+            position:absolute;
+            top:0;
+            left:0;
+            padding:vr(0.5) 0;
+            text-transform:uppercase;
+            transform-origin:left top;
+            transition:0.2s $elastic;
+            pointer-events:none;
         }
         &--required {
             .field__label {
@@ -312,29 +308,32 @@
                 }
             }
         }
-        &__label-logo {
-            height:$multiple * 1;
-            display:inline-block;
-            width:auto;
-            vertical-align: middle;
-        }
         &__wrapper {
             position:relative;
             display:flex;
             align-items:center;
             width:100%;
             box-sizing: border-box;
-            border:2px solid transparent;
-            border-radius:$radius + 2px;
             transition:0.2s $ease-in-out-expo;
-            &::before {
+            &::before, &::after {
                 position:absolute;
-                top:0; right:0; bottom:0; left:0;
-                border:$border;
-                border-radius:$radius;
+                bottom:0;
+                left:0;
+                width:100%;
+                height:1px;
                 pointer-events:none;
                 background:transparent;
+                transform-origin:left center;
                 content:"";
+            }
+            &::before {
+               
+            }
+            &::after {
+                
+                //opacity:0;
+                transform:scaleX(0);
+                transition:0.5s $ease-out-expo;
             }
 
         }
@@ -343,88 +342,78 @@
             list-style:none;
             top:100%;
             left:0; right:0;
-            line-height:$multiple;
+            line-height:line-height(1);
             pointer-events:none;
-            animation:error-fade-in 0.6s $ease-in-out-expo;
             text-align:right;
             color:$red;
-            font-size:10px;
+            font-size:0.55rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             @include breakpoint(lg) {
-                font-size:11px;
+                font-size:0.6rem;
             }
             li {
                 display:inline;
             }
         }
         &__input, &__select, &__textarea {
-            padding:($multiple / 2) 0 ($multiple / 2) ($multiple / 2);
-            font-size:14px;
-            line-height:$multiple;
-            font-family:$body-font-family;
-            color:$black;
+            padding:vr(0.5) 0;
+            font-size:0.8rem;
+            line-height:line-height(1);
             font-weight:400;
             display:block;
             background-color:transparent;
             border-radius:0;
-            min-height:$multiple * 2;
+            min-height:vr(2);
             width:100%;
             flex:0 1 100%;
             min-width:0;
             @include breakpoint(lg) {
-                font-size:16px;
+                font-size:1rem;
             }
             &:focus {
                 outline:none;
             } 
             &::placeholder {
-                color: $grey;
+                //color: $grey;
             }
         }
         &__input {
-            height:$multiple * 2;
+            height:vr(2);
         }
         &__select {
-            height:$multiple * 2;
+            height:vr(2);
         }
         &--select {
             .field__wrapper {
                 .field__select {
-                    padding-right:$multiple * 1.25;
-                }
-                &::after {
-                    @include chev('down', 8px, $green);
-                    display:inline-block;
-                    vertical-align: middle;
-                    content:"";
-                    position:absolute;
-                    right:$multiple / 2;
-                    top:$multiple / 2;
+                    padding-right:vr(1.25);
                 }
             }
         }
+        &__select-icon {
+            pointer-events:none
+        }
         &__function-icon, &__hint-icon {
-            height:$multiple; width:$multiple;
+            height:vr(1); width:vr(1);
             pointer-events:none;
-            flex:0 0 $multiple;
+            flex:0 0 vr(1);
             margin-top:-2px;
         }
         &__function-icon {
-            margin-right:$multiple / 2;
-            top:$multiple / 4;
+            margin-right:vr(0.5);
+            top:vr(0.25);
             position:absolute;
             right:0;
         }
         &__hint-icon {
-            margin-left:$multiple / 2;
+            margin-left:vr(0.5);
         }
         &__textarea {
             display:block;
-            min-height:$multiple * 4;
-            line-height:$multiple;
-            padding:$multiple / 2;
+            min-height:vr(4);
+            line-height:vr(1);
             resize: none;
         }
         &__submit {
@@ -440,40 +429,36 @@
             position:absolute;
             left:-9999px;
             top:0;
-            visibility: hidden;
+            pointer-events:none;
             opacity:0;
         }
         &__radio-label, &__checkbox-label {
             display:block;
-            line-height:$multiple;
-            padding-left:$multiple * 1.25;
+            line-height:vr(1);
+            padding-left:vr(1.25);
             position:relative;
             cursor:pointer;
             text-align:left;
-            &::after {
+            &::after, &::before {
                 position:absolute;
                 left:0;
                 top:0;
                 content:"";
-                margin:((($multiple) - ($multiple * 0.75)) / 2);
-                margin-left:0;
-                width:$multiple * 0.75;
-                height:$multiple * 0.75;
+                margin:calc(var(--baseline) * 0.25 / 2);
+                width:vr(0.75);
+                height:vr(0.75);
                 display:block;
-                border:$border;
                 background-color:transparent;
             }
+            &::after {
+                margin-left:0;
+            }
+
             &::before {
-                position:absolute;
-                content:"";
                 opacity:0;
-                top:0; left:0;
+                top:-1px; left:0;
                 border:1px solid transparent;
-                display:block;
-                margin:(((($multiple) - ($multiple * 0.75)) / 2) + 1px);
                 margin-left:1px;
-                width:$multiple * 0.75;
-                height:$multiple * 0.75;
                 transition:0.2s $elastic;
                 transform:scale(0.5);
             }
@@ -490,7 +475,7 @@
             }
             &::before {
                 border-radius:50%;
-                background-color:$green;
+
                 box-sizing:border-box;
 
             }
@@ -503,7 +488,7 @@
                 background-size:contain;
                 background-position:center;
                 background-repeat:no-repeat;
-                //background-image:url('/assets/images/other/tick-hot-pink.png');
+                background-image:url('/images/other/tick-black.png');
             }
         }
         &__radio:checked + .field__radio-label,
@@ -520,10 +505,10 @@
         &--disabled {
             cursor:not-allowed;
             .field__radio-label {
-                color:$grey;
+                //color:$grey;
                 //text-decoration:line-through;
                 &::after {
-                    border-color:$grey;
+                    //border-color:$grey;
                 }
                 &::before {
                     
@@ -533,23 +518,31 @@
         }
         &--focus {
             .field__wrapper {
-                border-color:$green;
+                &::after {
+                    transition:0.5s $ease-in-expo;
+                    transform:scaleX(1);
+                }
             }
             .field__radio-label, .field__checkbox-label {
                 &::after {
-                    outline:2px solid $green;
+                    border:1px solid $red;
                 }
             }
         }
+        &--focus, &--active, &--select {
+            .field__label {
+                transform:translateY(calc(-1 * var(--baseline))) scale(0.6);
+            }
+        }
         &--error {
-            margin-bottom:$multiple !important;
+            margin-bottom:vr(1) !important;
         }
         &--invert {
             .field__input, .field__select, .field__textarea {
-                color:$white;
+                //color:$white;
             }
             .field__wrapper::before {
-                border-color:$white;
+                //border-color:$white;
             }
         }
         &--minimal {
@@ -565,7 +558,7 @@
         &--inline {
             display:inline-block;
             &.field--radio, &.field--checkbox {
-                margin-right:$multiple / 2;
+                margin-right:vr(0.5);
             }
         }
         &--pointer {

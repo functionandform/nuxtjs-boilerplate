@@ -1,178 +1,208 @@
-body {
-	font-size:15px;
-	font-weight:300;
-	line-height:$multiple;
-	font-family:$body-font-family;
-	color:$black;
+:root {
+	--baseline: 1.5rem;
+	@include line-height(1);
+
+}
+
+body, html {
+	@include line-height(1);
+}
+
+* {
+	
+}
+// body {
+//     position:relative;
+// }
+// body::after {
+//     display:block;
+//     width:100%;
+//     height:100%;
+//     position:absolute;
+//     content:"";
+//     top:0;
+//     left:0;
+//     z-index: 500;
+//     background-image: repeating-linear-gradient(to bottom, transparent 0px, transparent calc(var(--baseline) - 1px), red calc(var(--baseline) - 1px), red var(--baseline));
+//     pointer-events: none;
+//     opacity:0.3;
+// }
+// body:hover:after {
+//    // display:none;
+// }
+
+
+
+html {
+	font-size:16px;
 	@include breakpoint(md) {
-		font-size:17px;
+		font-size:18px;
+	}
+	@include breakpoint(xl) {
+		font-size:20px;
 	}
 }
 
-*, body {
+::selection {
+  background: $red;
+  color:#FFFFFF;
+}
+
+body {
+	font-weight:400;
+}
+
+* {
 	-webkit-font-smoothing: antialiased; /* This needs to be set or some font faced fonts look bold on Mac in Chrome/Webkit based browsers. */
 	-moz-osx-font-smoothing: grayscale; /* Fixes font bold issue in Firefox version 25+ on Mac */
-	font-display:swap;
 }
 
-p {
-	line-height:$multiple;
-	margin-bottom:$multiple;
-	strong {
-		font-weight:bolder;
+p, ul {
+	margin-bottom:vr(1);
+	&.small, small {
+		font-size:0.8rem;
 	}
-	&.small {
-		
+	&.big, big {
+	}
+	&.tiny, .tiny, &.caveat, .caveat {
+		font-size:0.75rem;
 		@include breakpoint(lg) {
-			
+			font-size:0.66rem;
 		}
-	}
-	&.big {
-		
-		@include breakpoint(lg) {
-			
-		}
-	}
-	a:link {
-		text-decoration:underline;
 	}
 	&.alert {
+	
 	}
 	.dropcap {
 		
+		
 	}
-	&.caveat {
-		font-size:10px;
-		line-height:$multiple * 0.75;
+	a[target="_blank"]::after {
+		display:inline;
+		height:16px;
+		width:16px;
+		content:"";
+		vertical-align:middle;
+		background-image:url('~/assets/images/other/ext-link.png');
+		background-size:16px;
+		background-repeat:no-repeat;
+		background-position:center;
+		position:relative;
+		margin-left:2px;
+		top:-1px;
+	}
+	&.small a[href*='//']::after {
+		background-size:12px;
+	}
+	&.large {
+		//font-size:18px;
 	}
 }
 
-p, ul, ol {
+
+strong {
+	font-weight:bolder;
+}
+
+em {
+	font-style:italic;
+}
+
+
+
+p, ul, ol, h1, h2, h3, h4, h5, h6 {
 	a:link, a:visited {
-		color:$purple;
-		text-decoration:none;
-		font-weight:bolder;
 		&:hover {
 			
 		}
 	}
 }
 
-
-
-// p {
-// 	a[target="_blank"]::after {
-// 		display:inline-block;
-// 		height:$multiple;
-// 		width:$multiple;
-// 		content:"";
-// 		vertical-align:middle;
-// 		background-image:url('/assets/images/other/ext-link.png');
-// 		background-size:16px;
-// 		background-repeat:no-repeat;
-// 		background-position:center;
-// 		position:relative;
-// 		margin-left:2px;
-// 		top:-1px;
-// 		// @include breakpoint(tablet-l) {
-// 		// 	height:$lg-multiple;
-// 		// 	width:$lg-multiple;
-// 		// }
-// 	}
-// 	&.small a[href*='//']::after {
-// 		background-size:12px;
-// 	}
-// }
-
-sup {
-	vertical-align:super;
-	font-size:0.5em;
-	position:relative;
-}
-
-sub {
-	vertical-align:sub;
-	font-size:0.5em;
-	position:relative;
-}
-
-strong {
-	font-weight:bolder;
-}
-
-ul, ol {
-	
-	li {
-
+h6 {
+	font-size:1rem;
+	margin-bottom:vr(1);
+	@include breakpoint(lg) {
+		font-size:0.8rem;
 	}
-}
-
-h1,h2,h3,h4,h5,h6, .h1,.h2,.h3,.h4,.h5,.h6 {
-	font-family:$title-font-family;
-	font-weight:500;
-	margin-bottom:$multiple;
-	
 }
 
 h5, .h5 {
-	font-variant-ligatures: discretionary-ligatures;
-	color:$black;
-	
-	
-	
+	font-size:1rem;
+	margin-bottom:vr(1);
+	@include breakpoint(xl) {
+		font-size:0.8rem;
+	}
 }
 
-h4, .h4 {
-	font-variant-ligatures: discretionary-ligatures;
-	color:$black;
-	
+h4 {
+	margin-bottom:vr(1);
+	font-size:1.1rem;
+	@include breakpoint(xl) {
+		font-size:1.1rem;
+	}
 }
 
-h3, .h3 {
+h3 {
 	font-variant-ligatures: discretionary-ligatures;
-	font-weight:500;
-	line-height:$multiple * 1.25;
-	font-size:21px;
-	color:$black;
-}
-
-h2, .h2 {
-	font-variant-ligatures: discretionary-ligatures;
-	font-weight:300;
-	line-height:$multiple * 1.5;
-	font-size:29px;
-	color:$green;
-
-}
-
-h1, .h1 {
-	font-variant-ligatures: discretionary-ligatures;
-	font-weight:600;
-	color:$green;
-	font-size:38px;
-	line-height:$multiple * 2;
-	color:$green;
-	@include breakpoint(md) {
+	font-family:$serif;
+	font-weight:700;
+	margin-bottom:vr(1);
+	font-size:1.8rem;
+	@include line-height(1.5);
+	@include breakpoint(lg) {
 		
 	}
-	@include breakpoint(lg) {
+}
+
+
+h2 {
+	font-variant-ligatures: discretionary-ligatures;
+	margin-bottom:vr(1);
+	font-size:2.4rem;
+	@include line-height(2);
+	@include breakpoint(md) {
+		font-size:2.5rem;
+		@include line-height(2);
 		
 	}
 	@include breakpoint(xl) {
 		
 	}
-	& + h2, & + .h2 {
-		margin-top:-$multiple;
+}
+
+
+h1 {
+	font-variant-ligatures: discretionary-ligatures;
+	margin-bottom:vr(1);
+	font-size: 2.5rem;
+	@include line-height(2);
+	@include breakpoint(md) {
+		font-size: 3rem;
+		@include line-height(2.5);
+	}
+	@include breakpoint(xxl) {
+		font-size: 3.8rem;
+		@include line-height(3);
+	}
+	@include breakpoint(xl) {
+		
 	}
 }
 
 
-
-
-.lower {
-	text-transform:none;
+sub, sup {
+	vertical-align: super;
+  	position: relative;
+  	font-size: 0.5em;
+  	line-height:0;
 }
 
-.upper {
-	text-transform:uppercase;
+sub {
+	vertical-align: sub;
 }
+
+
+
+
+
+

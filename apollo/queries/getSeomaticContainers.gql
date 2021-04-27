@@ -1,0 +1,10 @@
+query($uri:String!, $site:String) {
+  seomatic (uri: $uri, site: $site, asArray:true) {
+      metaTitleContainer
+      metaTagContainer
+      metaLinkContainer
+      metaScriptContainer
+      metaJsonLdContainer
+      metaSiteVarsContainer
+  }
+}

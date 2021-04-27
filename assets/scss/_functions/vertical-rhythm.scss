@@ -1,0 +1,7 @@
+@function vr($multiple) {
+	@if $multiple == 1 {
+		@return var(--baseline);
+	} @else {
+  		@return calc(var(--baseline) * #{$multiple});
+  	}
+}

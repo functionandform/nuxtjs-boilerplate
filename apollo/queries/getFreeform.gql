@@ -1,0 +1,203 @@
+query getFreeform($handle: [String]) {
+  freeform {
+    form(handle: $handle) {
+      id
+      uid
+      name
+      handle
+      hash
+      color
+      description
+      returnUrl
+      storeData
+      submissionTitleFormat
+      extraPostUrl
+      extraPostTriggerPhrase
+      ipCollectingEnabled
+      ajaxEnabled
+      showSpinner
+      showLoadingText
+      loadingText
+      recaptchaEnabled
+      defaultStatus
+      formTemplate
+      gtmId
+      gtmEventName
+      csrfToken {
+        name
+        value
+      }
+      honeypot {
+        name
+        hash
+        timestamp
+      }
+      pages {
+        label
+        index
+        rows {
+          fields {
+            id
+            type
+            label
+            hash
+            handle
+            instructions
+            required
+            pageIndex
+            ... on FreeformField_Text {
+              value
+              maxLength
+              placeholder
+            }
+            ... on FreeformField_Textarea {
+              value
+              maxLength
+              rows
+              placeholder
+            }
+            ... on FreeformField_Select {
+              value
+              options {
+                value
+                label
+                checked
+              }
+            }
+            ... on FreeformField_Checkbox {
+              value
+              checked
+            }
+            ... on FreeformField_MultipleSelect {
+              values
+              options {
+                value
+                label
+                checked
+              }
+            }
+            ... on FreeformField_CheckboxGroup {
+              values
+              oneLine
+              options {
+                value
+                label
+                checked
+              }
+            }
+            ... on FreeformField_RadioGroup {
+              value
+              options {
+                value
+                label
+                checked
+              }
+            }
+            ... on FreeformField_Email {
+              notificationId
+              placeholder
+            }
+            ... on FreeformField_DynamicRecipients {
+              values
+              notificationId
+              showAsRadio
+              showAsCheckboxes
+              oneLine
+              options {
+                value
+                label
+                checked
+              }
+            }
+            ... on FreeformField_Number {
+              value
+              minLength
+              minValue
+              maxValue
+              decimalCount
+              decimalSeparator
+              thousandsSeparator
+              allowNegative
+              placeholder
+            }
+            ... on FreeformField_File {
+              fileKinds
+              maxFileSizeKB
+              fileCount
+            }
+            ... on FreeformField_Confirmation {
+              targetFieldHash
+            }
+            ... on FreeformField_Datetime {
+              value
+              dateTimeType
+              generatePlaceholder
+              dateOrder
+              date4DigitYear
+              dateLeadingZero
+              dateSeparator
+              clock24h
+              clockSeparator
+              clockAMPMSeparate
+              useDatepicker
+              minDate
+              maxDate
+            }
+            ... on FreeformField_OpinionScale {
+              value
+              legends
+              scales {
+                value
+                label
+              }
+            }
+            ... on FreeformField_Phone {
+              value
+              pattern
+              useJsMask
+            }
+            ... on FreeformField_Rating {
+              value
+              maxValue
+              colorIdle
+              colorHover
+              colorSelected
+            }
+            ... on FreeformField_Regex {
+              value
+              pattern
+              message
+            }
+            ... on FreeformField_Signature {
+              width
+              height
+              showClearButton
+              borderColor
+              backgroundColor
+              penColor
+              penDotSize
+            }
+            ... on FreeformField_Table {
+              useScript
+              maxRows
+              addButtonLabel
+              addButtonMarkup
+              removeButtonLabel
+              removeButtonMarkup
+              tableLayout
+            }
+            ... on FreeformField_MailingList {
+              hidden
+            }
+            ... on FreeformField_Submit {
+              labelNext
+              labelPrev
+              disablePrev
+              position
+            }
+          }
+        }
+      }
+    }
+  }
+}

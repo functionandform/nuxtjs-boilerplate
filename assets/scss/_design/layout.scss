@@ -1,6 +1,6 @@
 html, body {
 	height: 100%;
-	background-color:$light-grey;
+	
 }
 
 body {
@@ -15,7 +15,7 @@ body {
 			position:fixed;
 		}
 	}
-	&.overlayOpen {
+	&.overlay-open {
 		overflow:hidden;
 	}
 }

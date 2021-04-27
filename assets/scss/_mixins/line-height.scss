@@ -1,0 +1,7 @@
+@mixin line-height($multiple) {
+	@if $multiple == 1 {
+		line-height:var(--baseline);
+	} @else {
+		line-height:calc(var(--baseline) * #{$multiple});
+	}
+}

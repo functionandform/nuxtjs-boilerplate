@@ -2,16 +2,13 @@
   <div class="app app--error">
   	<main>
   		<template v-if="error.statusCode === 404">
-
-  		// 404 page not found
-  		<h1>We can't seem to find this page</h1>
-  		<p>It may have been removed.</p>
+  		<h1>Error 404</h1>
+  		<p>We can't seem to find the page you're looking for.</p>
 	    </template>
 	    <template v-else>
 
-  		// other undefined error
-  		<h1>Sorry, we seem to be having difficulty rendering this page.</h1>
-  		<p>Try refreshing or visiting our homepage</p>
+  		<h1>Sorry, we seem to be having some technical issues.</h1>
+  		<p>Try refreshing the page or try again later</p>
 
 	    </template>
     </main>
