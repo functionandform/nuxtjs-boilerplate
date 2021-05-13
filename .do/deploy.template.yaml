@@ -1,31 +1,32 @@
-name: madefair
-region: ams
+name: nuxtjs-boilerplate
+region: fra
 services:
-- build_command: |-
-    npm install
-    npm run build
+- build_command: npm run build
   environment_slug: node-js
   envs:
-  - key: APOLLO_DEFAULT_ENDPOINT
+  - key: GRAPHQL_PATH
     scope: RUN_AND_BUILD_TIME
-    value: https://api.madefair.org/graphql
-  - key: ENV
+    value: /graphql
+  - key: SERVER_HOST
     scope: RUN_AND_BUILD_TIME
-    value: production
-  - key: NODE_ENV
+    value: 0.0.0.0
+  - key: SERVER_PORT
     scope: RUN_AND_BUILD_TIME
-    value: production
+    value: "8080"
+  - key: GRAPHQL_TOKEN
+    scope: RUN_AND_BUILD_TIME
+    value: XXXXX
   - key: API_BASE_URL
     scope: RUN_AND_BUILD_TIME
-    value: https://api.madefair.org/
+    value: https://example.com
   github:
-    branch: stage
+    branch: master
     deploy_on_push: true
-    repo: functionandform/madefair
+    repo: functionandform/nuxtjs-boilerplate
   http_port: 8080
   instance_count: 1
-  instance_size_slug: basic-xs
-  name: madefair
+  instance_size_slug: professional-s
+  name: nuxtjs-boilerplate
   routes:
   - path: /
   run_command: npm start
