@@ -64,7 +64,7 @@ export default {
 
 <style lang="scss">
   .row {
-    width:calc(100% + #{$multiple});
+    width:calc(100% + var(--baseline));
     box-sizing: border-box;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -78,8 +78,8 @@ export default {
     flex-direction: row;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-right:(-($multiple / 2));
-    margin-left:(-($multiple / 2));
+    margin-right:vr(-0.5);
+    margin-left:vr(-0.5);
 
   }
 

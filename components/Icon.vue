@@ -1,5 +1,5 @@
 <template>
-	<svg :class="'icon '+addClass+' icon--'+size"><use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="require('~/assets/icons/icons.svg')+'#icon-'+ name"></use></svg>
+	<svg :class="'icon '+addClass+' icon--'+size"><use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="require('~/assets/iconography/icons.svg')+'#icon-'+ name"></use></svg>
 </template>
 
 

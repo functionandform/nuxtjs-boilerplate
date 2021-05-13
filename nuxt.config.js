@@ -60,7 +60,10 @@ export default {
     '~/plugins/headroom.client.js',
     '~/plugins/vue-check-view.client.js',
     '~/plugins/global-mixins.js',
-    '~/plugins/filters/*'
+    '~/plugins/filters/date-format',
+    '~/plugins/filters/slug-to-title',
+    '~/plugins/filters/tidy-url',
+    '~/plugins/filters/truncate'
   ],
 
   // dev mode

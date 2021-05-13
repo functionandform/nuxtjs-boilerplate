@@ -117,7 +117,7 @@ export default {
       
       position:relative;
       transition:0.2s $ease-in-out-expo;
-      @include line-height;
+      @include line-height(1);
       @include breakpoint(xl) {
         font-size:0.7rem;
       }

@@ -345,7 +345,7 @@
             line-height:line-height(1);
             pointer-events:none;
             text-align:right;
-            color:$red;
+            color:red;
             font-size:0.55rem;
             white-space: nowrap;
             overflow: hidden;
@@ -525,7 +525,7 @@
             }
             .field__radio-label, .field__checkbox-label {
                 &::after {
-                    border:1px solid $red;
+                    
                 }
             }
         }

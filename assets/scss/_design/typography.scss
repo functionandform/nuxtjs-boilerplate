@@ -44,7 +44,7 @@ html {
 }
 
 ::selection {
-  background: $red;
+  background: black;
   color:#FFFFFF;
 }
 
@@ -79,12 +79,12 @@ p, ul {
 	}
 	a[target="_blank"]::after {
 		display:inline;
-		height:16px;
-		width:16px;
+		height:24px;
+		width:24px;
 		content:"";
 		vertical-align:middle;
-		background-image:url('~/assets/images/other/ext-link.png');
-		background-size:16px;
+		background-image:url('~/assets/images/other/ext-link-blue.png');
+		background-size:24px;
 		background-repeat:no-repeat;
 		background-position:center;
 		position:relative;
@@ -92,7 +92,7 @@ p, ul {
 		top:-1px;
 	}
 	&.small a[href*='//']::after {
-		background-size:12px;
+		//background-size:12px;
 	}
 	&.large {
 		//font-size:18px;
@@ -144,8 +144,6 @@ h4 {
 
 h3 {
 	font-variant-ligatures: discretionary-ligatures;
-	font-family:$serif;
-	font-weight:700;
 	margin-bottom:vr(1);
 	font-size:1.8rem;
 	@include line-height(1.5);
