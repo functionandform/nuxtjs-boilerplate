@@ -1,4 +1,4 @@
-query($uri:String!, $site:String) {
+query($uri:String! = "__home__", $site:String) {
   seomatic (uri: $uri, site: $site, asArray:true) {
       metaTitleContainer
       metaTagContainer

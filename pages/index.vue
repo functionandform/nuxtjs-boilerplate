@@ -11,18 +11,19 @@ export default {
     }
   },
   apollo: {
-      homepage: {
+      entry: {
         query: GET_HOMEPAGE,
         //prefetch: ({ $i18n }) => ({ site: $i18n.locale }),
         variables () {
           return { site: 'default' }
         },
         error (error) {
-          console.log("error", error);
+          console.error(error);
         },
         result ({ data, loading, networkStatus }) {
-          if (!loading) {
-          }
+          if (!data.entry) {
+              return this.$nuxt.error({ statusCode: 404 });
+            }     
         }
       }
     },

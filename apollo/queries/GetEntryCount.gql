@@ -1,0 +1,3 @@
+query getEntries($type: [String], $limit: Int, $offset:Int, $orderBy:String = "postDate desc", $typeId: [QueryArgument], $search:String, $section:[String] = ["publications","blog"], $relatedTo:[QueryArgument], $relatedToAll:[QueryArgument], $id:[QueryArgument], $relatedToCategories:[CategoryCriteriaInput], $relatedToTags:[TagCriteriaInput], $relatedToEntries:[EntryCriteriaInput], $relatedToUsers:[UserCriteriaInput]) {
+  entryCount(section: $section, orderBy: $orderBy, limit:$limit, offset:$offset, type:$type, typeId:$typeId, search:$search, relatedTo:$relatedTo, relatedToAll:$relatedToAll, id:$id, relatedToCategories:$relatedToCategories, relatedToEntries:$relatedToEntries, relatedToTags:$relatedToTags, relatedToUsers:$relatedToUsers )
+}

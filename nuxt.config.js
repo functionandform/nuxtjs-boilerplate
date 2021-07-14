@@ -58,7 +58,7 @@ export default {
     '~/plugins/vue-lazyload.client',
     '~/plugins/flickity.client.js',
     '~/plugins/headroom.client.js',
-    '~/plugins/vue-check-view.client.js',
+    '~/plugins/vue-inview.client.js',
     '~/plugins/global-mixins.js',
     '~/plugins/vue-case',
     '~/plugins/filters/date-format',
@@ -104,6 +104,10 @@ export default {
   '@nuxtjs/apollo',
   '@nuxtjs/style-resources',
   // '@nuxtjs/axios', // needed for nuxt seomatic meta
+  'vue-social-sharing/nuxt',
+  'vue-scrollto/nuxt',
+  'nuxt-protected-mailto',
+  '@nuxtjs/gtm'
   ],
 
   // Apollo config and endpoint for graph ql
@@ -137,6 +141,11 @@ export default {
     '~/assets/scss/global'
   ],
 
+  // Google tag manager using the nuxt GTM module
+  gtm: {
+    id: process.env.GTM_ID,
+  },
+
   // Proxy
   proxy: {
       //'/graphql': { target: process.env.API_BASE_URL },
@@ -147,18 +156,23 @@ export default {
   build: {
     // some chunking optimisations
     extractCSS: true,
-        optimization: {
-            splitChunks: {
-                cacheGroups: {
-                    styles: {
-                        name: 'styles',
-                        test: /\.(css|vue)$/,
-                        chunks: 'all',
-                        enforce: true
-                    }
+      optimization: {
+        splitChunks: {
+            cacheGroups: {
+                styles: {
+                    name: 'styles',
+                    test: /\.(css|vue)$/,
+                    chunks: 'all',
+                    enforce: true
                 }
             }
-        },
+        }
+    },
+    html: { // needed for nuxt-protected-mailto component
+      minify: {
+        decodeEntities: false
+      }
+    },
     // extend webpack here
     extend (config, ctx) {
       config.node = {

@@ -1,19 +1,230 @@
-.pop-transition-enter-active, .pop-transition-leave-active {
+.pop-enter-active, .pop-leave-active {
     transition:all 0.5s $ease-out-expo 0s;
 }
 
-.pop-transition-enter,
-.pop-transition-leave-to {
+.pop-enter,
+.pop-leave-to {
+    opacity: 0;
+    transform:scale(0.9);
+}
+
+.pop-1-enter-active, .pop-1-leave-active {
+    transition:all 0.5s $ease-out-expo 0.2s;
+}
+
+.pop-1-enter,
+.pop-1-leave-to {
+    opacity: 0;
+    transform:scale(0.9);
+}
+.pop-2-enter-active, .pop-2-leave-active {
+    transition:all 0.5s $ease-out-expo 0.4s;
+}
+
+.pop-2-enter,
+.pop-2-leave-to {
+    opacity: 0;
+    transform:scale(0.9);
+}
+.pop-3-enter-active, .pop-3-leave-active {
+    transition:all 0.5s $ease-out-expo 0.6s;
+}
+
+.pop-3-enter,
+.pop-3-leave-to {
+    opacity: 0;
+    transform:scale(0.9);
+}
+.pop-4-enter-active, .pop-4-leave-active {
+    transition:all 0.5s $ease-out-expo 0.8s;
+}
+
+.pop-4-enter,
+.pop-4-leave-to {
     opacity: 0;
     transform:scale(0.9);
 }
 
 
-.fade-transition-enter-active, .fade-transition-leave-active {
+.fade-enter-active, .fade-leave-active {
     transition:all 0.5s $ease-out-expo 0s;
 }
 
-.fade-transition-enter,
-.fade-transition-leave-to {
+.fade-enter,
+.fade-leave-to {
     opacity: 0;
 }
+
+.fade-1-enter-active, .fade-1-leave-active {
+    transition:all 0.5s $ease-out-expo 0.2s;
+}
+
+.fade-1-enter,
+.fade-1-leave-to {
+    opacity: 0;
+}
+
+.fade-2-enter-active, .fade-2-leave-active {
+    transition:all 0.5s $ease-out-expo 0.4s;
+}
+
+.fade-2-enter,
+.fade-2-leave-to {
+    opacity: 0;
+}
+.fade-3-enter-active, .fade-3-leave-active {
+    transition:all 0.5s $ease-out-expo 0.6s;
+}
+
+.fade-3-enter,
+.fade-3-leave-to {
+    opacity: 0;
+}
+
+.fade-4-enter-active, .fade-4-leave-active {
+    transition:all 0.5s $ease-out-expo 0.8s;
+}
+
+.fade-4-enter,
+.fade-4-leave-to {
+    opacity: 0;
+}
+
+
+.slide-up-enter-active, .slide-up-leave-active {
+    transition:all 0.5s $ease-out-expo 0s;
+}
+
+.slide-up-enter,
+.slide-up-leave-to {
+    opacity: 0;
+    transform:translateY(72px);
+}
+
+
+.slide-up-1-enter-active, .slide-up-1-leave-active {
+    transition:all 0.5s $ease-out-expo 0.2s;
+}
+
+.slide-up-1-enter,
+.slide-up-1-leave-to {
+    opacity: 0;
+    transform:translateY(72px);
+}
+
+.slide-up-2-enter-active, .slide-up-2-leave-active {
+    transition:all 0.5s $ease-out-expo 0.4s;
+}
+
+.slide-up-2-enter,
+.slide-up-2-leave-to {
+    opacity: 0;
+    transform:translateY(72px);
+}
+.slide-up-3-enter-active, .slide-up-3-leave-active {
+    transition:all 0.5s $ease-out-expo 0.6s;
+}
+
+.slide-up-3-enter,
+.slide-up-3-leave-to {
+    opacity: 0;
+    transform:translateY(72px);
+}
+.slide-up-4-enter-active, .slide-up-4-leave-active {
+    transition:all 0.5s $ease-out-expo 0.8s;
+}
+
+.slide-up-4-enter,
+.slide-up-4-leave-to {
+    opacity: 0;
+    transform:translateY(72px);
+}
+
+.slide-up-5-enter-active, .slide-up-5-leave-active {
+    transition:all 0.5s $ease-out-expo 1s;
+}
+
+.slide-up-5-enter,
+.slide-up-5-leave-to {
+    opacity: 0;
+    transform:translateY(72px);
+}
+
+.slide-up-6-enter-active, .slide-up-6-leave-active {
+    transition:all 0.5s $ease-out-expo 1.2s;
+}
+
+.slide-up-6-enter,
+.slide-up-6-leave-to {
+    opacity: 0;
+    transform:translateY(72px);
+}
+
+.slide-up-8-enter-active, .slide-up-8-leave-active {
+    transition:all 0.5s $ease-out-expo 1.4s;
+}
+
+.slide-up-8-enter,
+.slide-up-8-leave-to {
+    opacity: 0;
+    transform:translateY(72px);
+}
+
+.slide-up-9-enter-active, .slide-up-9-leave-active {
+    transition:all 0.5s $ease-out-expo 1.6s;
+}
+
+.slide-up-9-enter,
+.slide-up-9-leave-to {
+    opacity: 0;
+    transform:translateY(72px);
+}
+
+
+
+.vertical-collapse-1000-enter-active {
+    overflow:hidden;
+    transition:opacity 0.3s $ease-in-out-expo 0.5s, max-height 0.5s $ease-in-out-expo;
+}
+
+
+.vertical-collapse-1000-enter, .vertical-collapse-1000-leave-to {
+    max-height:0;
+    opacity:0;
+}
+
+.vertical-collapse-1000-enter-to, .vertical-collapse-1000-leave {
+    max-height:1000px;
+    opacity:1;
+}
+
+
+.vertical-collapse-1000-leave-active {
+    overflow:hidden;
+    transition:max-height 0.5s $ease-in-out-expo 0.3s, opacity 0.3s $ease-in-out-expo 0s;
+}
+
+
+
+.vertical-collapse-500-enter-active {
+    overflow:hidden;
+    transition:opacity 0.3s $ease-in-out-expo 0.5s, max-height 0.5s $ease-in-out-expo;
+}
+
+
+.vertical-collapse-500-enter, .vertical-collapse-500-leave-to {
+    max-height:0;
+    opacity:0;
+}
+
+.vertical-collapse-500-enter-to, .vertical-collapse-500-leave {
+    max-height:500px;
+    opacity:1;
+}
+
+
+.vertical-collapse-500-leave-active {
+    overflow:hidden;
+    transition:max-height 0.5s $ease-in-out-expo 0.3s, opacity 0.3s $ease-in-out-expo 0s;
+}
+

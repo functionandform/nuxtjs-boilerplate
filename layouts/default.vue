@@ -9,8 +9,40 @@
 </template>
 
 <script>
+	import GET_SEOMATIC_CONTAINERS from '~/apollo/queries/getSeomaticContainers.gql';
 	export default {
-		
+		name:"default",
+		data() {
+			return {
+				seomaticContainers:null
+			}
+		},
+		head() {
+			if (this.seomaticContainers) {
+				return this.seomaticContainers;
+			}
+		},
+		apollo: {
+			seomatic: {
+			  query: GET_SEOMATIC_CONTAINERS,
+			  prefetch: ({ route }) => ({
+			    uri: route.fullPath,
+			    site: "default",
+			  }),
+			  variables() {
+			    return {
+			      uri: this.$route.fullPath,
+			      site: "default",
+			    };
+			  },
+			  error(error) {
+			    console.error(error);
+			  },
+			  result(data, loading, networkStatus) {
+			   	this.seomaticContainers = this.$options.methods.compileSeomatic(this.seomatic); 
+			   }
+			},
+		}
 	}
 </script>
 
@@ -29,14 +61,5 @@
 	    //display: flex;
 	    //flex-direction: column;
 	    //justify-content: center;
-	}
-
-	.fade-enter-active,
-	.fade-leave-active {
-		transition: opacity 0.5s $ease-in-out-expo 0.1s;
-	}
-	.fade-enter,
-	.fade-leave-active {
-		opacity: 0;
 	}
 </style>

@@ -6,7 +6,8 @@ Vue.filter('prettyBytes', function (value) {
   var num = parseInt(value);
   // jacked from: https://github.com/sindresorhus/pretty-bytes
   if (typeof num !== 'number' || isNaN(num)) {
-    throw new TypeError('Expected a number');
+   // throw new TypeError('Expected a number');
+   return value;
   }
 
   var exponent;

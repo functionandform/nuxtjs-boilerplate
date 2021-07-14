@@ -1,6 +1,6 @@
-# Madefair.org website
+# A Nuxt JS Web app built by Function & Form
 
-This website uses data from the madefair api to allow users to track the supply chain and people involved in making their clothing. The MadeFair initiative is managed and owned by Continental Clothing.
+This app has a corresponding CMS which provides the content API for this app. In this case, the CMS we are using is Craft CMS, with a Graph QL API. For more information about the Craft CMS API, consult their [documentation](https://craftcms.com/docs/3.x/graphql.html).
 
 ## Deploy with Digital Ocean
 
@@ -8,11 +8,13 @@ This website uses data from the madefair api to allow users to track the supply 
 
 ## Build Setup
 
+Before getting started, you must first copy the `example.env` file and rename it `.env`. If not all of the variables are populated, please request any missing variable data from your manager or handover developer.
+
 ```bash
 # install dependencies
 $ npm install
 
-# serve with hot reload at localhost:3000
+# serve with hot reload at localhost:8080
 $ npm run dev
 
 # build for production and launch server
