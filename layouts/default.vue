@@ -1,10 +1,9 @@
 <template>
   <div class="app">
   	<main class="main">
-  		<transition name="fade" appear>
 		    <Nuxt />
-		</transition>
-	</main>
+		</main>
+		<cookie-consent :decline-allowed="false" position="bottom-left"/>
   </div>
 </template>
 
@@ -21,6 +20,10 @@
 			if (this.seomaticContainers) {
 				return this.seomaticContainers;
 			}
+		},
+		transition: {
+			name: 'fade',
+			mode: 'out-in'
 		},
 		apollo: {
 			seomatic: {

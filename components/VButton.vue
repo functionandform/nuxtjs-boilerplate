@@ -8,7 +8,7 @@
     @mouseleave="mouseLeave()"
   >
     <div class="button__fill"></div>
-    <div class="button__loading-icon" v-if="loading"><span></span><span></span><span></span></div><div class="button__icon" v-if="leadingIcon"><icon :name="leadingIcon" size="small"></icon></div><span class="button__label"><slot></slot></span><div class="button__icon" v-if="weight == 'primary' || weight == 'secondary' || trailingIcon"><icon :name="trailingIcon ? trailingIcon : 'arrow-right-small'" size="small"></icon></div>
+    <div class="button__loading-icon" v-if="loading"><span></span><span></span><span></span></div><div class="button__icon button__icon--leading" v-if="leadingIcon"><icon :name="leadingIcon" size="normal"></icon></div><span class="button__label"><slot></slot></span><div class="button__icon button__icon--trailing" v-if="(trailingIcon !== false) && (weight === 'primary' || weight === 'secondary' || weight === 'tertiary' || trailingIcon)"><icon :name="trailingIcon ? trailingIcon : 'arrow-right'" size="normal"></icon></div>
   </button>
 </template>
 
@@ -23,7 +23,7 @@ export default {
       type: String,
     },
     trailingIcon: {
-      default:false
+      required:false
     },
     leadingIcon: {
       default:false

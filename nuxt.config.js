@@ -7,6 +7,9 @@ export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'Boilerplate',
+    htmlAttrs: {
+      lang: 'en-GB'
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -144,6 +147,7 @@ export default {
   // Google tag manager using the nuxt GTM module
   gtm: {
     id: process.env.GTM_ID,
+    autoInit: false, // turning off auto init so that the cookie consent component can init if accepted
   },
 
   // Proxy

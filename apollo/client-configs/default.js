@@ -7,8 +7,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
 export default ({req, app, $config}) => {
     const token = $config.graphqlToken;
     const endpoint = $config.apiBaseUrl + $config.graphqlPath;
-    console.log('endpoint: '+endpoint);
-    console.log('token: '+token);
+
     // let headersVal = {
     //     'Accept-Language': app.i18n.locale 
     // }
