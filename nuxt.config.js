@@ -82,7 +82,15 @@ export default {
   dev: process.env.NODE_ENV !== 'production',
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
-  components: true,
+  components: [
+    {
+      path: '~/components',
+      extensions: ['vue'],
+      prefix: 'app',
+      pathPrefix: false,
+      ignore: ['~components/pages', '**/_**']
+    }
+  ],
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
