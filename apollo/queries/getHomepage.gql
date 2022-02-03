@@ -1,10 +1,8 @@
 query getHomepage($site: [String]) {
   homepage: entry(site: $site, slug: "homepage") {
-    ... on homepage_homepage_Entry {
-      id
-      headline
-      introduction
-      inputFieldLabel
-    }
+    id
+    slug
+    uri
+    url
   }
 }

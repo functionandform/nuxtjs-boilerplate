@@ -33,10 +33,15 @@
 
 @import '~/assets/scss/_base/fonts';
 
+/* IMport animations ---------------- */
+@import '~/assets/scss/_base/animations';
+
 
 /* ---------- Import themes ---------- */
 
 @import '~/assets/scss/_base/themes';
+
+@import '~/assets/scss/_base/header';
 
 
 /* ---------- Import design ---------- */

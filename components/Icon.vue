@@ -31,6 +31,7 @@
 
 <style lang="scss">
 
+
 	/* Generated using nucleoapp.com */
 	/* --------------------------------
 
@@ -41,22 +42,16 @@
 	.icon {
 	  display: inline-block;
 	  /* icon primary color */
-	  color: $black;
-	  height:24px; width:24px;
+	  color: black;
+	  height:1em; width:1em;
 	  stroke-width:2px;
 	  vertical-align: middle;
-	  &--large {
-	    width:36px; height:36px;
-	  }
-	  &--small {
-	    width:16px; height:16px;
-
-	  }
 	}
 
 	.icon use {
 	  /* icon secondary color - fill */
 	  fill: inherit;
+	  stroke:currentColor;
 	}
 
 	.icon.icon--outline use {
@@ -73,7 +68,7 @@
 
 	.icon.icon--duo use {
 	  /* icon secondary color - stroke */
-	  stroke: $black;
+	  stroke: red;
 	}
 	/* --------------------------------
 
@@ -139,18 +134,18 @@
 
 	-------------------------------- */
 
-	.icon {
-	  fill: currentColor;
-	  stroke: none;
-	}
+	// .icon {
+	//   fill: currentColor;
+	//   stroke: none;
+	// }
 
-	.icon.icon--outline {
-	  stroke: currentColor;
-	}
+	// .icon.icon--outline {
+	//   stroke: currentColor;
+	// }
 
-	.icon use {
-	  stroke: none;
-	}
+	// .icon use {
+	//   stroke: none;
+	// }
 
 	/* -------------------------------- 
 

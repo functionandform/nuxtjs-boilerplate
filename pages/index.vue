@@ -7,7 +7,7 @@ import GET_HOMEPAGE from '~/apollo/queries/getHomepage.gql';
 export default {
   data(){
     return {
-      baseUrl: process.env.BASE_URL,
+      
     }
   },
   apollo: {
@@ -21,9 +21,13 @@ export default {
           console.error(error);
         },
         result ({ data, loading, networkStatus }) {
-          if (!data.entry) {
-              return this.$nuxt.error({ statusCode: 404 });
-            }     
+          if (data && data.entry) {
+            // Entry exists
+          }
+          else {
+            console.error('Entry does not existing')
+            return this.$nuxt.error({ statusCode: 404 });
+          }
         }
       }
     },

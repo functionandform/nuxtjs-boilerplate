@@ -1,18 +1,21 @@
 <template>
     <div class="field"
-         :class="[typeClass(), {'field--invert': invert, 'field--minimal': minimal , 'field--inline': inline, 'field--required':required}, classes]">
+         :class="[typeClass(), {'field--invert': invert, 'field--minimal': minimal , 'field--inline': inline, 'field--required':required, 'field--block':block}, classes]" ref="field">
         <template v-if="type != 'radio' && type != 'checkbox'">
+            <template v-if="label">
+                <label :for="id" class="field__label">{{ label }}<strong v-if="required" class="red">*</strong></label>
+            </template>
             <div class="field__wrapper">
                 <div class="field__hint-icon" v-if="icon">
                     <icon :name="icon"></icon>
                 </div><!-- icon -->
 
                 <template v-if="type === 'select'">
-                    <select :type="type" :name="name" :placeholder="placeholder" :disabled="disabled"
-                            :readonly="readonly"  :required="required" @focus="focus" @blur="validateAndBlur" @change="active" ref="input"
-                            class="field__select" :value="value" @input="$emit('input', $event.target.value)">
-                        <option disabled>Please select</option>
-                        <option v-for="(option, index) in options" :value="option.value" :selected="option.checked" :key="index">{{
+                    <select :type="type" :name="name" :disabled="disabled"
+                            :readonly="readonly"  @focus="focus" @blur="validateAndBlur" @change="active" ref="input"
+                            class="field__select" @input="$emit('input', $event.target.value)" :required="required">
+                        <option disabled :selected="value && value.length ? false : true"><template v-if="placeholder">{{placeholder}}</template><template v-else>Please select</template></option>
+                        <option v-for="(option, index) in options" :value="option.value" :selected="value && value === option.value" :key="index">{{
                             option.label ? option.label : option.value}}
                         </option>
                     </select>
@@ -23,39 +26,39 @@
 
                 <template v-else-if="type === 'textarea'">
                     <textarea :type="type" :name="name" :placeholder="placeholder" :disabled="disabled"
-                              :readonly="readonly" @focus="focus" @blur="validateAndBlur" @change="onChange" @keyup="active, textarea"
+                              :readonly="readonly" :required="required" @focus="focus" @blur="validateAndBlur" @change="onChange" @keyup="active, textarea"
                               ref="input" class="field__textarea" :value="value"
-                              @input="$emit('input', $event.target.value)" :required="required"></textarea>
+                              @input="$emit('input', $event.target.value)"></textarea>
+                </template>
+
+                <template v-else-if="type === 'date'">
+                    <input :type="type" :name="name" :placeholder="placeholder" :disabled="disabled"
+                           :readonly="readonly" :required="required" :value="value" @focus="focus" @blur="validateAndBlur" @keyup="active"
+                           ref="input" :class="'field__input ' + inputClasses" :pattern="pattern" :title="title"
+                           @input="$emit('input', $event.target.value)">
                 </template>
 
                 <template v-else>
                     <input :type="type" :name="name" :placeholder="placeholder" :disabled="disabled"
-                           :readonly="readonly" :value="value" @focus="focus" @blur="validateAndBlur" @keyup="active"
+                           :readonly="readonly" :required="required" :value="value" @focus="focus" @blur="validateAndBlur" @keyup="active"
                            ref="input" :class="'field__input ' + inputClasses" :pattern="pattern" :title="title"
-                           @input="$emit('input', $event.target.value)" :required="required">
+                           @input="$emit('input', $event.target.value)">
                 </template>
                 <template v-if="submitButton">
-                    <div class="field__submit">
+                    <button type="submit" class="field__submit">
                         <icon name="arrow-right"></icon>
-                    </div><!-- submit -->
+                    </button><!-- submit -->
                 </template>
             </div><!-- wrapper -->
-            <template v-if="label">
-                <label :for="id" class="field__label h5">{{ label }}</label>
-            </template>
         </template>
 
         <template v-if="type === 'checkbox' || type === 'radio'">
             <input :class="'field__' + type" :type="type" :name="name" :placeholder="placeholder" :disabled="disabled"
-                   :readonly="readonly" @focus="focus" @blur="validateAndBlur" @change="onChange" ref="input"
-                   :true-value="value" :id="name+'_'+value" :checked="shouldBeChecked" :required="required">
-            <label :for="name+'_'+value" :class=" 'field__'+ type +'-label' ">
-                <template v-if="labelLogoPath">
-                    <img class="field__label-logo" :src="labelLogoPath" :alt="label">
-                </template>
-                <template v-else>
-                    {{ label }}
-                </template>
+                   :readonly="readonly" :required="required" @focus="focus" @blur="validateAndBlur" @change="onChange" ref="input"
+                   :value="value" :id="name+'_'+value|paramCase" :checked="shouldBeChecked">
+            <label :for="name+'_'+value|paramCase" :class="'field__'+ type +'-label'">
+                <span v-html="label"></span>
+                <strong v-if="required" class="red">*</strong>
             </label>
         </template>
         <span class="field__error" v-if="error">{{error}}</span>
@@ -159,8 +162,7 @@
             },
             required: {
                 type:Boolean,
-                required:false,
-                default:false
+                required:false
             },
             submitButton: {
                 required:false,
@@ -178,6 +180,10 @@
             ariaLabel: {
                 required:false,
                 type:String
+            },
+            block: {
+                required:false,
+                type:Boolean
             }
         },
         data() {
@@ -199,49 +205,70 @@
         },
         methods: {
             onChange(e) {
-                this.$emit('input', this.value)
+                //this.$emit('input', this.value)
                 this.active()
             },
             focus() {
-                this.$el.closest(".field").classList.add("field--focus");
+                const input = this.$refs.input;
+                const field = this.$refs.field;
+                if (input && field) {
+                    field.classList.add("field--focus");
+                }
             },
             typeClass() {
                 return 'field--' + this.type;
             },
             active() {
                 const input = this.$refs.input;
-                if (input.value.length > 0) {
-                    input.closest(".field").classList.add("field--active");
-                } else {
-                    input.closest(".field").classList.remove("field--active");
+                const field = this.$refs.field;
+                if (input && field) {
+                    if (input.value && input.value.length > 0) {
+                        field.classList.add("field--active");
+                    } else {
+                        field.classList.remove("field--active");
+                    }
                 }
             },
             validateAndBlur() {
                 this.validate();
                 this.blur();
             },
-            blur: function () {
-                this.$refs.input.closest(".field").classList.remove("field--focus");
-            },
-            validate: function () {
+            blur() {
                 const input = this.$refs.input;
-                if (!input.validity.valid) {
-                    input.closest(".field").classList.add("field--invalid");
-                } else {
-                    input.closest(".field").classList.remove("field--invalid");
+                const field = this.$refs.field;
+                if (input && field) {
+                    field.classList.remove("field--focus");
                 }
             },
-            textarea: function() {
-                this.$refs.input.style.height = "48px";
-                this.$refs.input.style.height = (this.$refs.input.scrollHeight) + "px";
+            validate() {
+                const input = this.$refs.input;
+                const field = this.$refs.field;
+                if (input && field) {
+                    if (!input.validity.valid) {
+                        input.closest(".field").classList.add("field--invalid");
+                    } else {
+                        input.closest(".field").classList.remove("field--invalid");
+                    }
+                }
             },
-            adaptiveSelectWidth: function () {
+            textarea() {
+                const input = this.$refs.input;
+                if (input) {
+                    input.style.height = "48px";
+                    input.style.height = (input.scrollHeight) + "px";
+                }
+            },
+            adaptiveSelectWidth() {
                 let select = this.$refs.input;
-                let field = select.closest('.field');
-                let selectedOption = select.options[select.selectedIndex ?? 0];
-                let value = select.value;
-                let label = selectedOption.text;
-                select.style.width = (label.length) + "ch";
+                const field = this.$refs.field;
+                if (select && field) {
+                    const selectedOption = select.options[select.selectedIndex ?? 0];
+                    if (selectedOption) {
+                        let value = select.value;
+                        let label = selectedOption.text;
+                        select.style.width = (label.length) + "ch";
+                    }
+                }
             }
         },
         computed: {
@@ -285,28 +312,24 @@
     .field {
         display:block;
         margin-bottom:vr(1);
-        padding-bottom:vr(0.5);
+        //padding-bottom:vr(0.5);
         box-sizing: border-box;
         position:relative;
+        text-align:left;
         &__label {
             display:block;
             margin-bottom:vr(0.5);
-            position:absolute;
-            top:0;
-            left:0;
-            padding:vr(0.5) 0;
-            text-transform:uppercase;
-            transform-origin:left top;
-            transition:0.2s $elastic;
-            pointer-events:none;
+            text-align:left;
         }
         &--required {
-            .field__label {
-                &::after {
-                    display:inline;
-                    content:"*";
-                }
-            }
+            // .field__label, .field__checkbox {
+            //     &::after {
+            //         display:inline;
+            //         content:"*";
+            //         color:$red;
+            //         font-weight:700;
+            //     }
+            // }
         }
         &__wrapper {
             position:relative;
@@ -317,51 +340,61 @@
             transition:0.2s $ease-in-out-expo;
             &::before, &::after {
                 position:absolute;
+                box-sizing:border-box;
                 bottom:0;
                 left:0;
+                height:100%;
                 width:100%;
-                height:1px;
                 pointer-events:none;
-                background:transparent;
-                transform-origin:left center;
                 content:"";
             }
             &::before {
-               
+                background-color: white;
+                border:2px solid black;
             }
+
             &::after {
-                
-                //opacity:0;
-                transform:scaleX(0);
-                transition:0.5s $ease-out-expo;
+                opacity:0;
+                transition:0.2s $ease-in-out-expo;
+                border:2px solid blue;
+            }
+            & > * {
+                position:relative;
+                z-index: 1;
             }
 
         }
-        &__error, .ff-errors {
-            position:absolute;
-            list-style:none;
-            top:100%;
-            left:0; right:0;
+        &__error {
+            list-style: none;
             line-height:line-height(1);
-            pointer-events:none;
-            text-align:right;
-            color:red;
             font-size:0.55rem;
+            text-align:right;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            @include breakpoint(lg) {
+            pointer-events:none;
+            margin-bottom:vr(1);
+             @include breakpoint(lg) {
                 font-size:0.6rem;
             }
             li {
                 display:inline;
             }
         }
+        &__wrapper {
+            .field__error, .ff-errors {
+                position:absolute;
+                top:100%;
+                left:0; right:0;
+                animation:error-fade-in 0.6s $ease-in-out-expo;
+               
+            }
+        }
         &__input, &__select, &__textarea {
-            padding:vr(0.5) 0;
-            font-size:0.8rem;
+
+            padding:vr(0.5) vr(0.5);
+            font-size:1rem;
             line-height:line-height(1);
-            font-weight:400;
             display:block;
             background-color:transparent;
             border-radius:0;
@@ -374,7 +407,7 @@
             }
             &:focus {
                 outline:none;
-            } 
+            }
             &::placeholder {
                 //color: $grey;
             }
@@ -391,9 +424,15 @@
                     padding-right:vr(1.25);
                 }
             }
+            option {
+                &:disabled {
+
+                }
+            }
         }
         &__select-icon {
-            pointer-events:none
+            pointer-events:none;
+            padding-right:vr(0.5);
         }
         &__function-icon, &__hint-icon {
             height:vr(1); width:vr(1);
@@ -409,6 +448,9 @@
         }
         &__hint-icon {
             margin-left:vr(0.5);
+            .icon {
+
+            }
         }
         &__textarea {
             display:block;
@@ -417,6 +459,17 @@
             resize: none;
         }
         &__submit {
+            margin:0 vr(0.5);
+            z-index: 2;
+            pointer-events:all;
+            -webkit-appearance: none;
+            background-color:transparent;
+            border:none;
+            cursor:pointer;
+            border-radius:0px;
+            .icon {
+                
+            }
             .button {
                 margin-bottom:0;
                 &--primary, &--secondary {
@@ -450,11 +503,13 @@
                 display:block;
                 background-color:transparent;
             }
-            &::after {
+            &::before {
                 margin-left:0;
+                background-color: white
+                border:1px solid transparent;
             }
 
-            &::before {
+            &::after {
                 opacity:0;
                 top:-1px; left:0;
                 border:1px solid transparent;
@@ -469,34 +524,36 @@
             }
         }
         &__radio-label {
-            &::after {
-                border-radius:50%;
-                background-color:transparent;
-            }
             &::before {
                 border-radius:50%;
-
+            }
+            &::after {
+                border-radius:50%;
+                background-color:$blue
                 box-sizing:border-box;
 
             }
         }
         &__checkbox-label {
-            &::after {
-                
-            }
             &::before {
+
+            }
+            &::after {
                 background-size:contain;
                 background-position:center;
                 background-repeat:no-repeat;
-                background-image:url('/images/other/tick-black.png');
+                background-color:blue;
+                content:'';
+                mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' width='24' viewBox='0 0 24 24'%3E%3Cg stroke-linecap='square' stroke-width='2' fill='none' stroke='black' stroke-linejoin='miter' class='nc-icon-wrapper' stroke-miterlimit='10'%3E%3Cpolyline points='6,12 10,16 18,8 '%3E%3C/polyline%3E%3C/g%3E%3C/svg%3E") center center no-repeat;
             }
+
         }
         &__radio:checked + .field__radio-label,
         &__checkbox:checked + .field__checkbox-label,
         .field__radio-label.is-checked,
         .field__checkbox-label.is-checked,
         {
-            &::before {
+            &::after {
                 opacity:1;
                 transform:scale(1);
 
@@ -511,39 +568,33 @@
                     //border-color:$grey;
                 }
                 &::before {
-                    
+
 
                 }
             }
         }
         &--focus {
-            .field__wrapper {
+           .field__wrapper {
                 &::after {
-                    transition:0.5s $ease-in-expo;
-                    transform:scaleX(1);
+                    opacity:1;
                 }
             }
-            .field__radio-label, .field__checkbox-label {
-                &::after {
-                    
+            .field__checkbox-label, .field__radio-label {
+                &::before {
+                    border:1px solid blue;
                 }
             }
         }
         &--focus, &--active, &--select {
             .field__label {
-                transform:translateY(calc(-1 * var(--baseline))) scale(0.6);
+                //transform:translateY(calc(-1 * var(--baseline))) scale(0.6);
+            }
+            .field__wrapper {
+                
             }
         }
         &--error {
             margin-bottom:vr(1) !important;
-        }
-        &--invert {
-            .field__input, .field__select, .field__textarea {
-                //color:$white;
-            }
-            .field__wrapper::before {
-                //border-color:$white;
-            }
         }
         &--minimal {
             .field__wrapper {
@@ -564,6 +615,20 @@
         &--pointer {
             input, select, textarea {
                 cursor:pointer;
+            }
+        }
+    }
+
+
+    .call-out-box:not(.call-out-box--light) .field, .section--light-grey .field, .field--invert {
+        .field__wrapper {
+            &::before {
+                
+            }
+        }
+        .field__radio-label, .field__checkbox-label {
+            &::before {
+                
             }
         }
     }

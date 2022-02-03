@@ -1,5 +1,5 @@
 require('dotenv').config();
-
+import axios from 'axios';
 
 
 
@@ -60,7 +60,6 @@ export default {
     '~/plugins/flexboxgrid/index',
     '~/plugins/vue-lazyload.client',
     '~/plugins/flickity.client.js',
-    '~/plugins/headroom.client.js',
     '~/plugins/vue-inview.client.js',
     '~/plugins/global-mixins.js',
     '~/plugins/vue-case',
@@ -71,6 +70,13 @@ export default {
     '~/plugins/filters/camel-to-sentence',
     '~/plugins/filters/pretty-bytes'
   ],
+
+
+  // transition mode
+  pageTransition: {
+    name: 'fade',
+    mode: 'out-in'
+  },
 
   // dev mode
   dev: process.env.NODE_ENV !== 'production',
@@ -110,8 +116,45 @@ export default {
   'vue-social-sharing/nuxt',
   'vue-scrollto/nuxt',
   'nuxt-protected-mailto',
-  '@nuxtjs/gtm'
+  '@nuxtjs/gtm',
+  '@nuxtjs/robots'
+  '@nuxtjs/proxy',
+  '@nuxtjs/redirect-module'
   ],
+
+  // ROBOTS FOR search engine crawling
+  robots: () => {
+    if (process.env.ENVIRONMENT && process.env.ENVIRONMENT === 'production') { // production environment - allow robots
+      return { 
+        sitemap: process.env.BASE_URL+'/sitemaps-1-sitemap.xml',
+        UserAgent: '*',
+        Disallow: ['/admin', '/.env', '/users']
+      }
+    } else { // every other environment - block robots
+      return { 
+        UserAgent: '*',
+        Disallow: '/'
+      }
+    }
+  },
+
+  // redirects
+  redirect: async () => {
+    const baseUrl = process.env.API_BASE_URL; // get API url
+    const endpoint = '/actions/retour/api/get-redirects'; // get endpoint path
+    const api = baseUrl+endpoint;
+    const redirects = await axios.get(api) // await axios endpoint query;
+
+    
+    const formattedRedirects = redirects.data.map(redirect => { // map redirect array and reformat it for redirect module requirements
+        let formattedRedirect = {};
+        formattedRedirect.from = redirect.redirectSrcUrl
+        formattedRedirect.to = redirect.redirectDestUrl
+        formattedRedirect.statusCode = redirect.redirectHttpCode
+        return formattedRedirect
+    })
+    return formattedRedirects;
+},
 
   // Apollo config and endpoint for graph ql
   apollo: {
@@ -152,8 +195,8 @@ export default {
 
   // Proxy
   proxy: {
-      //'/graphql': { target: process.env.API_BASE_URL },
-      //'/actions/': { target: process.env.API_BASE_URL },
+    '/*sitemap.xml': process.env.API_BASE_URL,
+    '/*sitemap.xsl': process.env.API_BASE_URL,
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

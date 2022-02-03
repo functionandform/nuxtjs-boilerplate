@@ -1,15 +1,16 @@
 <template>
-  <button
-    :type="type"
+  <component :is="getComponentType"
+    :type="getComponentType === 'button' ? 'button' : null"
+    :to="to"
+    :href="url"
     :class="
       'button button--loading button--' + weight + ' ' + addClass + ' ' + applyInvertClass + ' button--loading-' + loading"
     ref="button"
-    @mouseenter="mouseEnter()"
-    @mouseleave="mouseLeave()"
   >
-    <div class="button__fill"></div>
-    <div class="button__loading-icon" v-if="loading"><span></span><span></span><span></span></div><div class="button__icon button__icon--leading" v-if="leadingIcon"><icon :name="leadingIcon" size="normal"></icon></div><span class="button__label"><slot></slot></span><div class="button__icon button__icon--trailing" v-if="(trailingIcon !== false) && (weight === 'primary' || weight === 'secondary' || weight === 'tertiary' || trailingIcon)"><icon :name="trailingIcon ? trailingIcon : 'arrow-right'" size="normal"></icon></div>
-  </button>
+    <div class="button__fill"><div class="button__border"></div></div>
+
+    <div class="button__loading-icon" v-if="loading"><span></span><span></span><span></span></div><div class="button__icon button__icon--leading" v-if="leadingIcon"><icon :name="leadingIcon" size="normal"></icon></div><span class="button__label"><slot></slot></span><div class="button__icon button__icon--trailing" v-if="(trailingIcon !== false) && (weight === 'primary' || weight === 'secondary' || weight === 'tertiary' || trailingIcon)"><icon :name="trailingIcon ? trailingIcon : 'chev-right-small'" size="normal"></icon></div>
+  </component>
 </template>
 
 <script>
@@ -19,14 +20,21 @@
 export default {
   props: {
     weight: {
-      required: true,
+      required: false,
       type: String,
+      default:'tertiary'
     },
     trailingIcon: {
       required:false
     },
     leadingIcon: {
       default:false
+    },
+    to: {
+      required:false
+    },
+    url: {
+      required:false
     },
     type: {
       required: false,
@@ -67,173 +75,220 @@ export default {
         return null;
       }
     },
+    getComponentType() {
+      if (this.to) {
+        return 'nuxt-link'
+      } else if (this.url) {
+        return 'a'
+      } else {
+        return 'button'
+      }
+    },
   },
   methods: {
+    
     applyWeightClass() {
       return `button--$(this.weight)`;
     },
-    mouseEnter(event) {
-     // this.setHoverObject(this.$refs.button);
-    },
-    mouseLeave(event) {
-     // this.setHoverObject(null);
-    }
+    // animateButton(e) {
+    //   const button = this.$refs.button;
+    //   let buttonOffset = button.getBoundingClientRect();
+    //   let x = e.clientX - buttonOffset.left;
+    //   let y = e.clientY - buttonOffset.top;
+    //   button.style.setProperty('--x', x + 'px');
+    //   button.style.setProperty('--y', y + 'px');
+    // },
   },
 };
 </script>
 
 
 
+
 <style lang="scss">
   .button {
-    -webkit-appearance: none;
+  -webkit-appearance: none;
+  display:inline-block;
+  white-space: nowrap;
+  background-color:transparent;
+  border:none;
+  cursor:pointer;
+  border-radius:0px;
+  position:relative;
+  white-space:nowrap;
+  display: inline-block;
+  vertical-align: middle;
+  overflow:hidden;
+  margin-bottom:vr(1);
+  &__label {
     display:inline-block;
-    white-space: nowrap;
-    background-color:transparent;
-    border:none;
-    cursor:pointer;
-    border-radius:0px;
-    position:relative;
-    white-space:nowrap;
-    display: inline-block;
     vertical-align: middle;
-    margin-bottom:vr(1);
-    padding:0;
+    position:relative;
+    font-size:14px;
+    color:black;
+    line-height:vr(1);
+    height:vr(1);
+    letter-spacing:0.3em;
+    font-weight:600;
     transition:0.2s $ease-in-out-expo;
-    &.no-margin {
-      margin-bottom:0;
-    }
-    &__icon {
-      margin-right:vr(0.25);
-      height:auto;
-      display:inline-block;
-      vertical-align: middle;
-      top:-1px;
-      position:relative;
+    font-family:$body-font-family;
+    pointer-events:none;
+  }
+  &__icon {
+    display:inline-block;
+    pointer-events:none;
+    vertical-align: middle;
+    height:auto;
+    position:relative;
+    line-height:vr(1);
+    margin:0 vr(0.25);
+    .icon {
+      display:block;
+      color:black;
+      width:24px;
+      height:24px;
       transition:0.2s $ease-in-out-expo;
     }
-    &__label {
-      font-size:0.8rem;
+    
+  }
+  &__fill {
+    background-color: transparent;
+    height:2rem; width:100%;
+    position:absolute;
+    top:50%; left:0;
+    max-height:100%;
+    transform:translateY(-50%);
+    overflow: hidden;
+  }
+  &--tertiary {
+    padding:vr(0.5) 0;
+    &:hover {
       
-      position:relative;
-      transition:0.2s $ease-in-out-expo;
-      @include line-height(1);
-      @include breakpoint(xl) {
-        font-size:0.7rem;
+    }
+    &:active {
+      
+    }
+    &:focus {
+      outline:none;
+    }
+  }
+  &--secondary, &--primary, &--category {
+    border-radius:vr(1.5);
+    padding:vr(0.5) vr(0.5);
+    height:vr(2);
+    text-align:center;
+    //height:$multiple * 2;
+    background-color:transparent;
+    .button__icon, .button__label {
+      margin:0 vr(0.25);
+    }
+    .button__icon {
+      &--trailing {
+        
       }
-      & + .button__icon {
-        margin-left:vr(0.25);
-        margin-right:0;
-        vertical-align: middle;
+      &--leading {
+        
       }
     }
     .icon {
-      vertical-align: middle;
-      display:inline-block;
-      position:relative;
+      margin:0 auto;
     }
-    &__loading-icon {
-      height:24px;
-      width:24px;
-      display:inline;
+    .button__label {
       text-align:center;
-      position:absolute;
-      top:50%;
-      left:50%;
-      transform:translateX(-50%);
-      margin-top:-(12px);
-      pointer-events:none;
-      visibility: hidden;
-      z-index: 1;
-    }
-    &__fill {
-      position:absolute;
-      width:100%;
-      left:50%; top:50%;
-      transform:translate(-50%, -50%);
-      height:100%;
-      max-height:48px;
-      display:none;
-      transform-origin:center;
-      &::before {
-        position:absolute;
-        width:100%;
-        height:100%;
-        border-radius:vr(1);
-        content:"";
-        transition:0.3s $ease-in-out-expo;
-        display:block;
-        transform-origin:center;
-      }
-    }
-    &--primary {
-      .button__fill {
-        display:block;
-      }
-      height:vr(2);
-      //border:$border-dashed;
-      padding:0 2em;
-      border-radius:var(--baseline);
-      @include breakpoint(xl) {
-        padding-right:2em;
-        padding-left:2em;
-      }
-      &:hover {
-        .button__fill::before {
-          
-        }
-      }
-      &:active {
-        .button__fill::before {
-          
-        }
-      }
-    }
-    &--primary {
-      
-    }
-    &--invert {
-
-    }
-    &--loading-true {
-      .button {
-        &__loading-icon {
-          visibility: visible;
-          opacity:1;
-        }
-        &__label, &__icon {
-          opacity:0;
-        }
-      }
-      &.button--primary {
+      display: inline-block;
+      min-width:vr(1.5);
+      vertical-align:middle;
+      @include breakpoint(tablet-l) {
         
       }
+    }
+    .button__fill {
+      border-radius:1rem;
+      &::after {
+        display:block;
+        position:absolute;
+        top:0; right:0; bottom:0; left:0;
+        border-radius:vr(1);
+        content:"";
+        pointer-events:none;
+        background:transparent;
+        box-sizing: border-box;
+      }
+    }
+    &:hover {
       .button__fill {
-        width:calc(var(--baseline) * 2);
+        background-color:black;
+        &::before {
+          --size: 200px;
+          transition: width .2s $ease-in-expo, height .2s $ease-in-expo;
+        }
+      }
+      .button__label, .icon {
+        color:$white;
+      }
+    } 
+    @include breakpoint(tablet-l) {
+      max-height:100%;
+    }
+    &.button--iconOnly {
+      .button__icon {
+        
+      }
+    }
+    &:focus {
+      outline:none;
+      .button__fill {
+        box-shadow:0 0 0px 2px blue;
+      }
+    }
+  }
+  &--small {
+    &.button--secondary, &.button--primary {
+      // padding-top:vr(0.166666667);
+      // padding-right:vr(0.75);
+      // padding-left:vr(0.75);
+      // padding-bottom:vr(0.166666667);
+      // border-radius:vr(1);
+      // height:vr(1.5);
+    }
+  }
+  &--secondary {
+    .button__fill {
+      border-color:black;
+    }
+    .button__border {
+      display:block;
+      position:absolute;
+      top:0; right:0; bottom:0; left:0;
+      border-radius:vr(1);
+      border:2px solid black;
+      transition:0.5s $ease-out-expo;
+    }
+    &:hover {
+      transition:0.2s $ease-in-expo;
+      .button__border {
+        opacity:0;
       }
     }
 
-    @keyframes scaleInOut {
-      0% {
-          transform: scale(1);
-      }
-      15% {
-        transform: scale(1.75);
-      }
-      20% {
-          transform: scale(2);
-      }
-      30% {
-          transform: scale(1.95);
-      }
-      40% {
-          transform: scale(1.8);
-      }
-      100% {
-          transform: scale(1);
-      }
   }
+    &--primary {
+    .button__fill {
+      background-color:black;
+    }
+    .button__label {
+      color:$white;
+    }
+    .button__icon .icon {
+      color:$white;
+    }
+    }
+
+  &--disabled, &:disabled {
+    pointer-events:none;
+    cursor:not-allowed;
   }
+}
 
 
 </style>

@@ -25,6 +25,18 @@
 			name: 'fade',
 			mode: 'out-in'
 		},
+		created() {
+			const ctx = this;
+			if (process.client) {
+				document.addEventListener('scroll', ctx.applyScrollPosition);
+			}
+		},
+		destroyed() {
+			const ctx = this;
+			if (process.client) {
+				document.removeEventListener('scroll', ctx.applyScrollPosition);
+			}
+		},
 		apollo: {
 			seomatic: {
 			  query: GET_SEOMATIC_CONTAINERS,

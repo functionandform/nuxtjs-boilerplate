@@ -1,7 +1,0 @@
-query getRedirect($uri:String) {
-  retour(uri: $uri) {
-    redirectSrcUrl
-    redirectDestUrl
-    redirectHttpCode
-  }
-}

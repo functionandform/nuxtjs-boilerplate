@@ -1,15 +1,73 @@
 import Vue from "vue";
+import { mapMutations } from 'vuex';
 
 if (!Vue.globalMixin) {
 	Vue.globalMixin = true
 	
 	Vue.mixin({
+		data() {
+			return {
+				prevScrollTop:null
+			}
+		},
 		methods: {
-			svgPlaceholder(width,height) {
-				const widthNumber = parseInt(width, 10);;
-				const heightNumber = parseInt(height, 10);;
-				return 'https://placeholder.pics/svg/'+widthNumber+'x'+heightNumber+'/F4F8FA/F4F8FA'
+			...mapMutations([
+		      'setIsTop',
+		      'setIsBottom',
+		      'setScrollDirection'
+		    ]),
+		    pushDataLayer(variables) {
+				const ctx = this;
+				if (window && window.dataLayer && variables) {
+				  window.dataLayer.push(variables);
+				}
 			},
+			applyScrollPosition(element) {
+			    if (process.client) {
+			    	var scrollTop = element.scrollTop || document.body.scrollTop || document.documentElement.scrollTop;
+			    	var scrollHeight = element.scrollHeight || document.body.scrollHeight || document.documentElement.scrollHeight;
+					const ctx = this;
+					if (scrollTop < 5) {
+					ctx.setIsTop(true);
+					ctx.setIsBottom(false);
+					} else if (scrollTop + window.innerHeight >= scrollHeight) {
+					ctx.setIsTop(false);
+					ctx.setIsBottom(true);
+					} else {
+					ctx.setIsTop(false);
+					ctx.setIsBottom(false);
+					}
+					if (this.prevScrollTop === null) {
+						ctx.setScrollDirection(null);
+					} else if (scrollTop && scrollTop > 48 && scrollTop > this.prevScrollTop) {
+						ctx.setScrollDirection('down')
+					} else if (scrollTop < this.prevScrollTop) {
+						ctx.setScrollDirection('up')
+					} else {
+						ctx.setScrollDirection(null);
+					}
+					ctx.prevScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+			  }
+		    },
+			svgPlaceholder(width,height) {
+				if (width && height) {
+					const widthNumber = parseInt(width, 10);
+					const heightNumber = parseInt(height, 10);
+					return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${widthNumber}' height='${heightNumber}'%3E%3C/svg%3E`
+				}
+			},
+			readTime(content) {
+		      let minutes = 0
+		      if (content) {
+			      const contentAsString = JSON.stringify(content)
+			      const words = contentAsString.split(' ').length
+			      const wordsPerMinute = 200
+			      
+			      minutes = Math.ceil(words / wordsPerMinute)
+			  }
+		      
+		      return minutes
+		    },
 			getOrientation(width, height) {
 		      let orientation = 'square';
 		      if (height > width) {
