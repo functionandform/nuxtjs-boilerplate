@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import GET_HOMEPAGE from '~/apollo/queries/getHomepage.gql';
+import GET_ENTRY from '~/apollo/queries/getEntry.gql';
 export default {
   data(){
     return {
@@ -12,10 +12,10 @@ export default {
   },
   apollo: {
       entry: {
-        query: GET_HOMEPAGE,
+        query: GET_ENTRY,
         //prefetch: ({ $i18n }) => ({ site: $i18n.locale }),
         variables () {
-          return { site: 'default' }
+          return { site: 'default', section:'homepage' }
         },
         error (error) {
           console.error(error);

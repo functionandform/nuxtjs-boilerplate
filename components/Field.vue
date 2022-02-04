@@ -505,7 +505,7 @@
             }
             &::before {
                 margin-left:0;
-                background-color: white
+                background-color: white;
                 border:1px solid transparent;
             }
 
@@ -529,7 +529,7 @@
             }
             &::after {
                 border-radius:50%;
-                background-color:$blue
+                background-color:blue;
                 box-sizing:border-box;
 
             }

@@ -41,7 +41,6 @@
 	.social-icon {
 	  display: inline-block;
 	  /* icon primary color */
-	  color:$pink;
 	  height:1em; width:1em;
 	  stroke-width:2px;
 	  vertical-align: middle;

@@ -71,7 +71,7 @@
       backdrop-filter: blur(10px);
     }
     &__close {
-      @include remove-button(vr(1), var(--accent));
+      @include remove-button(vr(1), black);
       position:absolute;
       top:vr(1); right:vr(1);
       z-index:10;

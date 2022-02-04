@@ -6,7 +6,7 @@ import axios from 'axios';
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'Boilerplate',
+    title: 'The Writer',
     htmlAttrs: {
       lang: 'en-GB'
     },
@@ -36,7 +36,7 @@ export default {
         { rel:'icon', type:'image/png', href:'/favicon/favicon-96x96.png', sizes:'96x96'},
         { rel:'icon', type:'image/png', href:'/favicon/favicon-32x32.png', sizes:'32x32'},
         { rel:'icon', type:'image/png', href:'/favicon/favicon-16x16.png', sizes:'16x16'},
-        { rel:'icon', type:'image/png', href:'/favicon/favicon-128.png', sizes:'128x128'},
+        { rel:'icon', type:'image/png', href:'/favicon/favicon-128.png', sizes:'128x128'}
         
     ]
   },
@@ -59,8 +59,7 @@ export default {
   plugins: [
     '~/plugins/flexboxgrid/index',
     '~/plugins/vue-lazyload.client',
-    '~/plugins/flickity.client.js',
-    '~/plugins/vue-inview.client.js',
+    '~/plugins/vue-check-view.client.js',
     '~/plugins/global-mixins.js',
     '~/plugins/vue-case',
     '~/plugins/filters/date-format',
@@ -120,14 +119,13 @@ export default {
   modules: [
   '@nuxtjs/apollo',
   '@nuxtjs/style-resources',
-  // '@nuxtjs/axios', // needed for nuxt seomatic meta
   'vue-social-sharing/nuxt',
   'vue-scrollto/nuxt',
   'nuxt-protected-mailto',
   '@nuxtjs/gtm',
-  '@nuxtjs/robots'
-  '@nuxtjs/proxy',
-  '@nuxtjs/redirect-module'
+  '@nuxtjs/robots',
+  '@nuxtjs/proxy'
+  //'@nuxtjs/redirect-module'
   ],
 
   // ROBOTS FOR search engine crawling
@@ -147,22 +145,22 @@ export default {
   },
 
   // redirects
-  redirect: async () => {
-    const baseUrl = process.env.API_BASE_URL; // get API url
-    const endpoint = '/actions/retour/api/get-redirects'; // get endpoint path
-    const api = baseUrl+endpoint;
-    const redirects = await axios.get(api) // await axios endpoint query;
+//   redirect: async () => {
+//     const baseUrl = process.env.API_BASE_URL; // get API url
+//     const endpoint = '/actions/retour/api/get-redirects'; // get endpoint path
+//     const api = baseUrl+endpoint;
+//     const redirects = await axios.get(api) // await axios endpoint query;
 
     
-    const formattedRedirects = redirects.data.map(redirect => { // map redirect array and reformat it for redirect module requirements
-        let formattedRedirect = {};
-        formattedRedirect.from = redirect.redirectSrcUrl
-        formattedRedirect.to = redirect.redirectDestUrl
-        formattedRedirect.statusCode = redirect.redirectHttpCode
-        return formattedRedirect
-    })
-    return formattedRedirects;
-},
+//     const formattedRedirects = redirects.data.map(redirect => { // map redirect array and reformat it for redirect module requirements
+//         let formattedRedirect = {};
+//         formattedRedirect.from = redirect.redirectSrcUrl
+//         formattedRedirect.to = redirect.redirectDestUrl
+//         formattedRedirect.statusCode = redirect.redirectHttpCode
+//         return formattedRedirect
+//     })
+//     return formattedRedirects;
+// },
 
   // Apollo config and endpoint for graph ql
   apollo: {

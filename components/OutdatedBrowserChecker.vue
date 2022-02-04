@@ -115,15 +115,10 @@ export default {
     z-index: 2000;
     top: 0;
     left: 0;
-    background-color: $white;
-    background-color:var(--bg);
-    color:$black;
-    color:var(--contrast);
     width: 100%;
     height: 100%;
     &__link {
-      color:$red;
-      color:var(--accent);
+      
     }
     &__banner {
       width: 100%;

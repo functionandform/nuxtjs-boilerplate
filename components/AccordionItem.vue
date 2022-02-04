@@ -77,7 +77,6 @@ export default {
 	justify-content: space-between;
 	h1,h2,h3,h4,h5,p {
 		margin-bottom:0;
-    color:$purple-dark;
 	}
   	&__icon {
   		transform:rotate(0deg);
