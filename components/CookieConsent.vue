@@ -9,7 +9,7 @@
 						<p class="small no-margin"><strong>Cookies help us improve your experience on our&nbsp;website.  Is&nbsp;this&nbsp;okay?</strong></p>
 					</div>
 					<div class="cookie-consent__action">
-						<v-button class="no-margin" weight="primary" @click.native="acceptCookieConsent" :trailing-icon="false">I'm fine with this</v-button>
+						<v-button class="no-margin" weight="primary" @click.native="acceptCookieConsent" :trailing-icon="false">Okay</v-button>
 						<v-button class="no-margin" v-if="declineAllowed" weight="tertiary" @click.native="declineCookieConsent">No cookies for me</v-button>
 					</div>
 				</div>
@@ -116,12 +116,13 @@
 		}
 		&__dialogue {
 			position:relative;
-			
+			min-height:vr(2.5);
 			text-align:center;
 			padding:vr(0.25) vr(0.25);
 			margin:vr(1);
 			max-width:300px;
 			pointer-events:all;
+			background-color: $white;
 
 		}
 		&__message {
@@ -131,6 +132,7 @@
 		&__action {
 			flex:0 0 auto;
 			margin:vr(0.25);
+			align-self:stretch;
 		}
 		&__cookie {
 			margin:0 auto vr(1) auto;

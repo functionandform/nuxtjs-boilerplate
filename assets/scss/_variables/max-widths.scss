@@ -1,5 +1,5 @@
-$max-width-sm: 1040px; // max-width
-$max-width-md: 1240px; // max-width
-$max-width-lg:1440px;
-$max-width-xl:1496px;
+$max-width-sm: 60rem; //calc(var(--baseline) * 40); //1040px; // max-width
+$max-width-md:70rem; //calc(var(--baseline) * 45);//1240px; // max-width
+$max-width-lg:80rem; //calc(var(--baseline) * 52); //1440px;
+$max-width-xl:85rem; //calc(var(--baseline) * 60); // 1496px;
 

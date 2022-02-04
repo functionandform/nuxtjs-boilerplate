@@ -120,6 +120,9 @@ export default {
   vertical-align: middle;
   overflow:hidden;
   margin-bottom:vr(1);
+  height:100%;
+  min-height:vr(1);
+  max-height:vr(2);
   &__label {
     display:inline-block;
     vertical-align: middle;
@@ -153,7 +156,7 @@ export default {
   }
   &__fill {
     background-color: transparent;
-    height:2rem; width:100%;
+    height:100%; width:100%;
     position:absolute;
     top:50%; left:0;
     max-height:100%;
@@ -173,9 +176,8 @@ export default {
     }
   }
   &--secondary, &--primary, &--category {
-    border-radius:vr(1.5);
-    padding:vr(0.5) vr(0.5);
-    height:vr(2);
+    padding:0 vr(0.5);
+    max-height:vr(2);
     text-align:center;
     //height:$multiple * 2;
     background-color:transparent;
@@ -203,7 +205,6 @@ export default {
       }
     }
     .button__fill {
-      border-radius:1rem;
       &::after {
         display:block;
         position:absolute;
@@ -260,7 +261,6 @@ export default {
       display:block;
       position:absolute;
       top:0; right:0; bottom:0; left:0;
-      border-radius:vr(1);
       border:2px solid black;
       transition:0.5s $ease-out-expo;
     }
