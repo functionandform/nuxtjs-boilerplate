@@ -46,7 +46,7 @@
         },
         result(data, loading, networkStatus) {
           const ctx  = this;
-          if (ctx.retour && ctx.retour.redirectDestUrl) {
+           if (ctx.retour && ctx.retour.redirectDestUrl && ctx.retour.redirectDestUrl.length) {
             let url = ctx.retour.redirectDestUrl;
             let destUrl = url;
             const firstChar = url.charAt(0);

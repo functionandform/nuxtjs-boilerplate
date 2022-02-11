@@ -1,0 +1,14 @@
+query getEntries($section: [String], $slug: [String], $id: [QueryArgument], $site: [String], $type:[String], $limit:Int, $relatedToEntries:[EntryCriteriaInput], $level:Int, $relatedTo:[QueryArgument], $orderBy:String = "postDate desc") {
+  entries(section: $section, slug: $slug, id: $id, site: $site, type:$type, limit:$limit, relatedToEntries:$relatedToEntries, level:$level relatedTo:$relatedTo, orderBy:$orderBy) {
+    id
+    uri
+    url
+    slug
+    level
+    typeHandle
+    dateUpdated
+    postDate
+    title
+  }
+
+}

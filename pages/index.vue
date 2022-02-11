@@ -13,7 +13,7 @@ export default {
   apollo: {
       entry: {
         query: GET_ENTRY,
-        //prefetch: ({ $i18n }) => ({ site: $i18n.locale }),
+        prefetch:true,
         variables () {
           return { site: 'default', section:'homepage' }
         },
@@ -25,7 +25,7 @@ export default {
             // Entry exists
           }
           else {
-            console.error('Entry does not existing')
+            console.error('Entry does not exist')
             return this.$nuxt.error({ statusCode: 404 });
           }
         }

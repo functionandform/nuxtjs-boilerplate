@@ -1,3 +1,5 @@
+![Function & Form](https://functionandform.co.uk/brand/functionandform-logo.svg)
+
 # A Nuxt JS Web app built by Function & Form
 
 This app has a corresponding CMS which provides the content API for this app. In this case, the CMS we are using is Craft CMS, with a Graph QL API. For more information about the Craft CMS API, consult their [documentation](https://craftcms.com/docs/3.x/graphql.html).

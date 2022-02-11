@@ -1,8 +1,13 @@
-query getHomepage($site: [String]) {
-  homepage: entry(site: $site, slug: "homepage") {
+query getEntry($section: [String], $slug: [String], $id: [QueryArgument], $site: [String], $uri: [String]) {
+  entry(section: $section, slug: $slug, id: $id, site: $site, uri: $uri) {
     id
-    slug
     uri
     url
+    slug
+    level
+    typeHandle
+    dateUpdated
+    postDate
+    title
   }
 }
